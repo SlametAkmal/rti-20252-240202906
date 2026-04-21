@@ -19,28 +19,38 @@ Reality → Observed Issue (Symptom) → Diagnosed Problem (Root Cause)
 
 | Level | Contoh | Status |
 |-------|--------|--------|
-| **Topik** | Keamanan IoT | Terlalu luas, tidak bisa diuji |
-| **Problem** | MQTT tidak terenkripsi | Spesifik tapi belum riset |
-| **Research Problem** | Belum ada studi membandingkan overhead TLS 1.3 vs DTLS pada MQTT di IoT RAM < 64KB | Bisa dirancang eksperimennya |
+| **Topik** | Sistem presensi mahasiswa berbasis QR Code | Terlalu luas, tidak bisa diuji |
+| **Problem** | Sistem presensi QR Code rentan terhadap kecurangan (titip absen) | Spesifik tapi belum riset |
+| **Research Problem** | Belum ada metode yang efektif untuk meningkatkan akurasi sistem presensi QR Code dalam memverifikasi kehadiran mahasiswa secara nyata | Bisa dirancang eksperimennya |
 
 ### Symptom vs Root Cause
 
-Apa yang diamati (gejala) ≠ mengapa terjadi (akar masalah). Gunakan **5 Whys** atau **Fishbone Diagram** untuk menggali.
+Symptom:Data kehadiran mahasiswa tidak sesuai dengan kondisi nyata di kelas
 
-Contoh: "User meninggalkan checkout" (symptom) → "Waktu loading > 8 detik karena API call sequential" (root cause).
+Root Cause: Sistem presensi QR Code tidak memiliki mekanisme verifikasi kehadiran secara langsung sehingga memungkinkan terjadinya kecurangan seperti titip absen
 
 ### System Thinking
 
-Setiap masalah riset TI harus terikat pada komponen sistem: **Input → Process → Output → Outcome → Constraints → Stakeholders**.
+System Thinking pada sistem presensi mahasiswa berbasis QR Code dapat dijelaskan sebagai berikut:
+
+Input       : QR Code mahasiswa dan data waktu kehadiran  
+Process     : Sistem membaca dan memvalidasi QR Code yang di-scan  
+Output      : Data kehadiran mahasiswa  
+Outcome     : Informasi kehadiran yang digunakan untuk evaluasi kehadiran mahasiswa  
+Constraints : Koneksi internet, akurasi pemindaian QR Code, dan potensi kecurangan (titip absen)  
+Stakeholders: Mahasiswa, dosen, dan pihak kampus
 
 ### Problem Quality Check
 
 Masalah riset yang layak harus memenuhi 5 kriteria:
-- **Clarity** — Satu orang membaca akan paham
-- **Measurability** — Ada metrik kuantitatif
-- **Relevance** — Penting untuk domain
-- **Testability** — Bisa gagal (falsifiable)
-- **Impact** — Ada kontribusi jika terjawab
+- **Clarity** — Masalah dijelaskan dengan jelas yaitu ketidakakuratan sistem presensi QR Code akibat kecurangan dan keterbatasan verifikasi  
+
+- **Measurability** — Dapat diukur menggunakan metrik seperti tingkat akurasi presensi, jumlah kesalahan, dan jumlah kecurangan  
+
+- **Relevance** — Masalah penting karena berkaitan dengan kehadiran mahasiswa di lingkungan kampus  
+
+- **Testability** — Dapat diuji melalui eksperimen dengan membandingkan data presensi dengan kondisi nyata  
+- **Impact** — Memiliki dampak dalam meningkatkan keakuratan sistem presensi dan kualitas data kehadiran
 
 ### Research vs Engineering
 
@@ -67,33 +77,34 @@ Masalah riset yang layak harus memenuhi 5 kriteria:
 PROBLEM STATEMENT BUILDER
 
 Domain & Konteks
-  Domain   : ____________________
-  Konteks  : ____________________
+  Domain   : Sistem Informasi
+  Konteks  : Sistem presensi mahasiswa berbasis QR Code di lingkungan kampus
+
 
 System Context
-  Input       : ____________________
-  Process     : ____________________
-  Output      : ____________________
-  Outcome     : ____________________
-  Constraints : ____________________
-  Stakeholders: ____________________
+  Input       : Data QR Code mahasiswa dan waktu kehadiran
+  Process     : Sistem membaca dan memvalidasi QR Code yang di-scan
+  Output      : Data kehadiran mahasiswa
+  Outcome     : Informasi kehadiran untuk evaluasi akademik
+  Constraints :  Koneksi internet, akurasi scanner, dan potensi kecurangan
+  Stakeholders: Mahasiswa, dosen, dan pihak kampus
 
 Fenomena → Problem
-  Fenomena yang diamati             : ____________________
-  Gejala (symptom) yang terukur     : ____________________
-  Masalah yang didiagnosis          : ____________________
-  Masalah riset (researchable)      : ____________________
-  Variabel yang terukur             : ____________________
+  Fenomena yang diamati             : Penggunaan sistem presensi QR Code untuk mencatat kehadiran mahasiswa
+  Gejala (symptom) yang terukur     : Terdapat ketidaksesuaian antara data kehadiran dengan kondisi nyata di kelas
+  Masalah yang didiagnosis          : Sistem tidak memiliki mekanisme verifikasi kehadiran secara langsung sehingga memungkinkan kecurangan
+  Masalah riset (researchable)      : Belum ada pendekatan yang efektif untuk meningkatkan akurasi sistem presensi QR Code dalam memverifikasi kehadiran mahasiswa
+  Variabel yang terukur             : Tingkat akurasi presensi, jumlah kesalahan, dan jumlah kecurangan
 
 Problem Quality Check
-  [ ] Clarity — Apakah satu orang membaca akan paham?
-  [ ] Measurability — Apakah ada metrik kuantitatif?
-  [ ] Relevance — Apakah penting untuk domain?
-  [ ] Testability — Apakah bisa gagal?
-  [ ] Impact — Apakah ada kontribusi jika terjawab?
+  [v] Clarity — Apakah satu orang membaca akan paham?
+  [v] Measurability — Apakah ada metrik kuantitatif?
+  [v] Relevance — Apakah penting untuk domain?
+  [v] Testability — Apakah bisa gagal?
+  [v] Impact — Apakah ada kontribusi jika terjawab?
 
 Problem Statement (1 paragraf):
-  ____________________
+   Sistem presensi mahasiswa berbasis QR Code banyak digunakan di lingkungan kampus untuk mencatat kehadiran. Namun, sistem ini masih memiliki kelemahan dalam hal akurasi karena adanya potensi kecurangan seperti titip absen serta keterbatasan dalam memverifikasi kehadiran secara nyata. Hal ini menyebabkan data kehadiran tidak selalu mencerminkan kondisi sebenarnya di kelas. Oleh karena itu, diperlukan penelitian untuk meningkatkan akurasi sistem presensi dengan mengukur tingkat kesalahan dan efektivitas sistem dalam merepresentasikan kehadiran mahasiswa secara nyata.
 ```
 
 ---
@@ -102,17 +113,16 @@ Problem Statement (1 paragraf):
 
 Pilih satu topik di bidang TI yang diminati. Transformasikan melalui 5 tahap Problem Formation Model.
 
-**Topik awal:** ________________________________________
+**Topik awal:** Sistem presensi mahasiswa berbasis QR Code
 
 | Tahap | Hasil |
 |-------|-------|
-| Reality | *Contoh: Aplikasi e-commerce sering ditinggalkan saat checkout* |
-| Observed Issue (Symptom) | *Contoh: Bounce rate checkout 68%* |
-| Diagnosed Problem (Root Cause) | |
-| Researchable Problem | |
-| Measurable Variable | |
+| Reality | Sistem presensi QR Code digunakan di kampus untuk mencatat kehadiran mahasiswa |
+| Observed Issue (Symptom) | Data kehadiran tidak selalu sesuai dengan kondisi nyata di kelas | |
+| Researchable Problem |Bagaimana meningkatkan akurasi sistem presensi QR Code dalam memverifikasi kehadiran mahasiswa secara nyata|
+| Measurable Variable | Tingkat akurasi presensi, jumlah kesalahan, dan jumlah kecurangan|
 
-**Apakah terjebak solution-first thinking?** [ ] Ya / [ ] Tidak
+**Apakah terjebak solution-first thinking?** [ ] Ya / [v] Tidak
 > Jika ya, kembali ke tahap mana? ________________________
 
 ---
@@ -123,14 +133,14 @@ Gambarkan konteks sistem dari masalah riset di Latihan 1.
 
 | Komponen | Deskripsi |
 |----------|----------|
-| Input | *Contoh: Request HTTP dari browser pengguna* |
-| Process | |
-| Output | |
-| Outcome | |
-| Constraints | |
-| Stakeholders | |
+| Input | Data QR Code mahasiswa dan waktu scan |
+| Process | Sistem membaca, memvalidasi QR Code, dan mencatat kehadiran|
+| Output |  Data kehadiran mahasiswa |
+| Outcome |  Informasi kehadiran yang digunakan untuk evaluasi akademik|
+| Constraints |  Koneksi internet, akurasi pemindaian QR Code, dan potensi kecurangan (titip absen)|
+| Stakeholders | Mahasiswa, dosen, dan pihak kampus|
 
-**Komponen mana yang paling relevan dengan masalah riset?** _______________
+**Komponen mana yang paling relevan dengan masalah riset?** > Proses
 
 ---
 
@@ -140,17 +150,17 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| Clarity | *Contoh: 4 — cukup jelas tapi perlu spesifikasi dataset* | |
-| Measurability | | |
-| Relevance | | |
-| Testability | | |
-| Impact | | |
+| Clarity | 4 | Masalah sudah jelas, namun bisa diperjelas pada metode verifikasi|
+| Measurability | 5 | Dapat diukur dengan metrik seperti akurasi, jumlah kesalahan, dan kecurangan|
+| Relevance | 5 |  Sangat relevan dengan sistem presensi di lingkungan kampus|
+| Testability | 4 | Dapat diuji melalui eksperimen dan perbandingan data|
+| Impact | 5 | Memberikan dampak dalam meningkatkan keakuratan sistem presensi|
 
-**Skor total:** _____ / 25
+**Skor total:** 23 / 25
 
 **Problem statement versi final (1 paragraf):**
-> ___________________________________________________
-> ___________________________________________________
+> Sistem presensi mahasiswa berbasis QR Code digunakan untuk mencatat kehadiran, namun masih memiliki kelemahan dalam akurasi akibat potensi kecurangan seperti titip absen serta keterbatasan dalam verifikasi kehadiran secara nyata. Hal ini menyebabkan data kehadiran tidak selalu mencerminkan kondisi sebenarnya di kelas. Oleh karena itu, penelitian ini bertujuan untuk mengevaluasi dan meningkatkan akurasi sistem presensi dengan mengukur tingkat kesalahan dan efektivitas sistem dalam merepresentasikan kehadiran mahasiswa secara akurat.
+
 
 ---
 
@@ -159,5 +169,7 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 > Bandingkan "masalah" yang biasa ditemui saat coding (bug, error) dengan masalah riset. Apa perbedaan fundamental dalam cara mendefinisikan dan mendekati keduanya?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Masalah dalam coding seperti bug atau error biasanya bersifat langsung dan spesifik, serta fokus pada memperbaiki sistem agar dapat berjalan dengan benar. Pendekatannya lebih ke mencari penyebab teknis dan segera memperbaikinya.
+
+> Sedangkan masalah riset bersifat lebih luas dan mendalam, tidak hanya memperbaiki tetapi memahami penyebab secara sistematis dan membuktikannya dengan data. Pendekatan riset memerlukan perumusan masalah yang jelas, pengukuran yang terstruktur, serta pengujian yang dapat dipertanggungjawabkan secara ilmiah.
+
