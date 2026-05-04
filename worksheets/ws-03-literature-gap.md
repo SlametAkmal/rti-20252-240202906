@@ -16,7 +16,7 @@ Literature review bukan merangkum paper satu per satu. Pendekatan yang benar ada
 |-------|--------------------------|---------------------------|
 | Struktur | Per penulis/paper ("Rahman et al. menyatakan...") | Per konsep/metode ("Pendekatan berbasis transformer") |
 | Tujuan | Ringkasan isi paper | Perbandingan metode & identifikasi gap |
-| Contoh paragraph | "Rahman (2023) pakai CNN. Lee (2022) pakai LSTM. Zhang (2021) pakai RF." | "Tiga pendekatan dominan: CNN digunakan oleh 4 paper untuk representasi fitur visual; LSTM untuk data sekuensial; RF sebagai baseline klasik." |
+| Contoh paragraph | "Rahman (2023) pakai CNN. Taufik (2022) pakai LSTM. Dira (2021) pakai RF." | "Tiga pendekatan dominan: CNN digunakan oleh 4 paper untuk representasi fitur visual; LSTM untuk data sekuensial; RF sebagai baseline klasik." |
 | Hasil akhir | Daftar paper | Peta pengetahuan + gap yang teridentifikasi |
 
 ### Empat Jenis Research Gap
@@ -85,9 +85,9 @@ Literature Matrix (concept-centric):
 |-------|-------|--------|------|--------|------------|
 |       |       |        |      |        |            |
 |Rahman et al.| 2023 | Naive Bayes | Review Tokopedia | Acc 87% | Kurang baik pada slang | 
-| Lee et al. | 2022 | SVM | Amazon Reviews | Acc 91% | Dataset bahasa Inggris |
+| Taufik al. | 2022 | SVM | Amazon Reviews | Acc 91% | Dataset bahasa Inggris |
 | Putra et al. | 2024 | NB + TF-IDF | Shopee Review | Acc 89% | Data terbatas |
-| Zhang et al. | 2021 | SVM Linear | Product Review Dataset | Acc 92% | Belum bandingkan model baru |
+| Dira et al. | 2021 | SVM Linear | Product Review Dataset | Acc 92% | Belum bandingkan model baru |
 | Dewi et al. | 2023 | NB vs SVM | Lazada Reviews | SVM lebih baik 4% | Belum menangani imbalance |
 Pola yang ditemukan:
   Metode dominan     : Naive Bayes dan SVM mendominasi klasifikasi sentimen klasik
@@ -109,7 +109,7 @@ Baseline Selection:
 | Baseline | Relevansi | Representatif | Source |
 |----------|-----------|---------------|--------|
 | Naive Bayes | Tinggi | Ya | Rahman et al., 2023 |
-| SVM | Tinggi | Ya | Lee et al., 2022 |
+| SVM | Tinggi | Ya | Taufik et al., 2022 |
 ```
 
 ---
@@ -127,9 +127,9 @@ AND ("Naive Bayes" OR "SVM")
 | # | Study | Tahun | Method | Dataset | Result | Limitasi |
 |---|-------|-------|--------|---------|--------|----------|
 | 1 | Rahman et al. | 2023 | Naive Bayes | Tokopedia | 87% | Slang sulit dideteksi |
-| 2 | Lee et al. | 2022 | SVM | | Amazon Reviews | 91% | Bahasa Inggris saja |
+| 2 | Taufik et al. | 2022 | SVM | | Amazon Reviews | 91% | Bahasa Inggris saja |
 | 3 | Putra et al. | 2024 | NB + TF-IDF | Shopee | 89% | Data sedikit |
-| 4 | Zhang et al. | 2021 | SVM | Product Dataset | 92% | Belum uji model baru |
+| 4 | Dira et al. | 2021 | SVM | Product Dataset | 92% | Belum uji model baru |
 | 5 | Dewi et al. | 2023 | NB vs SVM | Lazada | SVM unggul | Imbalance data |
 
 **Pola yang terlihat — Metode dominan: Naive Bayes dan SVM
@@ -161,7 +161,7 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 | # | Baseline | Mengapa Relevan | Mengapa Representatif | Apakah SOTA? | Sumber |
 |---|----------|----------------|----------------------|-------------|--------|
 | 1 | Naive Bayes | Task sama klasifikasi sentimen | Sering dipakai | Bukan | Rahman et al. 2023 |
-| 2 | SVM | Task sama klasifikasi sentimen | Baseline populer | Bukan, tapi kuat | Lee et al. 2022 |
+| 2 | SVM | Task sama klasifikasi sentimen | Baseline populer | Bukan, tapi kuat | Taufik et al. 2022 |
 
 **Apakah pemilihan baseline ini bisa dianggap straw man?** [ ] Ya / [ v ] Tidak
 > Justifikasi: Kedua baseline relevan, umum digunakan, dan representatif sebagai pembanding yang adil.
@@ -172,7 +172,7 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 
 > Apa perbedaan antara "belum ada yang meneliti ini" (klaim tanpa bukti) dengan research gap yang valid? Bagaimana cara membuktikan bahwa sebuah gap benar-benar ada?
 
-**Jawaban:**
+**Jawaban:**~
 > Perbedaan antara “belum ada yang meneliti ini” dengan research gap yang valid terletak pada bukti dan dasar analisisnya. Pernyataan “belum ada yang meneliti ini” sering hanya asumsi tanpa dukungan pencarian literatur yang jelas. Sementara research gap yang valid adalah celah penelitian yang ditemukan melalui kajian literatur, misalnya ada keterbatasan metode, performa yang belum optimal, dataset yang terbatas, atau konteks tertentu yang belum banyak dikaji.
 
 > Sebuah gap dikatakan benar-benar ada jika dibuktikan melalui systematic literature review atau pemetaan literatur dengan mencari dan membandingkan beberapa paper relevan, menemukan pola limitasi yang berulang, kontradiksi hasil penelitian, atau aspek yang belum terjawab. Gap juga harus didukung bukti pencarian (query, database, paper yang dikaji), bukan hanya klaim pribadi. Dengan demikian, research gap bukan sekadar “topik yang belum diteliti”, tetapi masalah nyata yang masih terbuka untuk diselesaikan.
