@@ -66,19 +66,19 @@ Metrik harus ditentukan **sebelum** eksperimen. Memilih metrik setelah melihat d
 ```
 VARIABLE & METRIC DEFINITION
 
-Research Question: ____________________
+Research Question: Apakah penggunaan e-commerce berpengaruh terhadap perkembangan bisnis pelaku usaha di era digital?
 
 | Variabel | Tipe | Konsep | Metrik | Skala | Satuan | Cara Mengukur | Justifikasi |
 |----------|------|--------|--------|-------|--------|---------------|-------------|
-|          | IV   |        |        |       |        |               |             |
-|          | DV   |        |        |       |        |               |             |
-|          | CV   |        |        |       |        |               |             |
+| Penggunaan | IV   | Seberapa aktif pelaku bisnis memanfaatkan | Frekuensi transaksi online per bulan | Ratio | Transaksi/bulan | Dicatat dari dashboard penjualan platform | Frekuensi transaksi mencerminkan intensitas penggunaan e-commerce secara langsung |
+|  Perkembangan | DV   | Pertumbuhan usaha yang terjadi setelah pelaku bisnis | Persentase kenaikan omzet penjualan per bulan | Ratio | 0% | Membandingkan rata-rata omzet 3 bulan sebelum | Jurnal menyebut e-commerce berperan meningkatkan jumlah penjualan dan memperluas pasar |
+| Jenis platform | CV   | Model transaksi yang digunakan pelaku bisnis | Kategori platform: B2B, B2C, atau C2C | Responden memilih jenis platform yang digunakan | Jenis platform mempengaruhi skala dan pola transaksi. B2B dan C2C punya dinamika pasar berbeda | e-commerce | (B2B, B2C, C2C seperti Tokopedia, OLX,)|
 
 Alignment Check:
   RQ → Concept → Variable → Metric → Data → Result
-  [ ] Setiap langkah terdokumentasi
-  [ ] Tidak ada "lompatan logis"
-  [ ] Metrik mengukur apa yang dimaksud (construct validity)
+  [v] Setiap langkah terdokumentasi
+  [v] Tidak ada "lompatan logis"
+  [v] Metrik mengukur apa yang dimaksud (construct validity)
 ```
 
 ---
@@ -87,16 +87,16 @@ Alignment Check:
 
 Gunakan RQ dari WS-04. Definisikan variabel dan metriknya.
 
-**RQ:** __________________________________________________
+**RQ:** Apakah penggunaan e-commerce berpengaruh terhadap perkembangan bisnis pelaku usaha di era digital?
 
 | Variabel | Tipe | Konsep Abstrak | Metrik Konkret | Skala (NOIR) | Satuan |
 |----------|------|---------------|----------------|-------------|--------|
-| *Contoh: Jenis model* | *IV* | *Pendekatan klasifikasi* | *Categorical: CNN vs RF* | *Nominal* | *—* |
-| | DV | | | | |
-| | CV | | | | |
+| Penggunaan e-commerce | IV | Seberapa aktif pelaku bisnis memanfaatkan platform e-commerce (marketplace, website,) | Frekuensi transaksi online per bulan | Ratio | Transaksi/bulan |
+| Perkembangan bisnis | DV | Pertumbuhan usaha yang dirasakan pelaku bisnis setelah menggunakan e-commerce | Persentase kenaikan omzet penjualan per bulan | Ratio | % |
+| Jenis platform e-commerce | CV | Model transaksi yang digunakan (B2B, B2C, C2C) | Kategori platform: Tokopedia, Shopee, OLX. | Nominal |-|
 
 **Apakah ada lompatan logis dalam rantai?** [ ] Ya / [ ] Tidak
-> Jika ya, di mana? ____________________________________
+> Jika ya, di mana? Rantai sudah terhubung: RQ menanyakan pengaruh e-commerce → konsep "penggunaan e-commerce" diukur via frekuensi transaksi (bisa dicatat dari dashboard platform) → hasilnya dikaitkan ke omzet sebagai indikator perkembangan bisnis yang konkret dan terukur.
 
 ---
 
@@ -106,15 +106,15 @@ Evaluasi metrik DV yang dipilih di Latihan 1 menggunakan 3 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| Representative | *Contoh: 4 — F1-Score mewakili keseimbangan precision-recall* | |
-| Sensitive | | |
-| Feasible | | |
+| Representative | 4 | Omzet langsung mencerminkan perkembangan bisnis. Jurnal menyebut e-commerce meningkatkan jumlah penjualan dan memperluas jangkauan pasar, sehingga kenaikan omzet wajar dijadikan indikator utama. |
+| Sensitive | 3 | Persentase omzet cukup peka menangkap perubahan, tapi bisa terpengaruh faktor musiman (misal: Ramadan, Harbolnas) yang tidak ada hubungannya dengan penggunaan e-commerce itu sendiri. |
+| Feasible | 4 | Data omzet relatif mudah didapat dari catatan penjualan pelaku usaha atau fitur analitik di platform seperti Tokopedia/Shopee. Jurnal juga menyebut bahwa e-commerce sendiri sudah menyediakan data pelanggan bagi pelaku bisnis. |
 
-**Apakah perlu secondary metric?** [ ] Ya / [ ] Tidak
-> Jika ya, apa dan mengapa? _____________________________
+**Apakah perlu secondary metric?** [v] Ya / [ ] Tidak
+> Jika ya, apa dan mengapa? Secondary metric: jumlah pelanggan baru per bulan. Alasannya, jurnal menekankan bahwa salah satu peran utama e-commerce adalah memperluas jangkauan pasar dan basis konsumen. Omzet bisa naik karena pelanggan lama beli lebih banyak, bukan karena ada pelanggan baru — padahal ekspansi pasar adalah inti dari RQ ini. Dua metrik ini saling melengkapi.
 
 **Contoh kasus ceiling effect untuk metrik ini:**
-> ___________________________________________________
+> Jika penelitian hanya dilakukan pada toko yang sudah sangat besar dan mapan di Tokopedia/Shopee, omzet mereka sudah di titik jenuh sehingga kenaikan bulanannya kecil meski e-commerce tetap berperan. Akibatnya, perbedaan antar kelompok jadi tidak kelihatan.
 
 ---
 
@@ -124,10 +124,10 @@ Bayangkan data yang akan dikumpulkan dari eksperimen. Evaluasi 4 dimensi kualita
 
 | Dimensi | Pertanyaan | Jawaban | Strategi Mitigasi |
 |---------|-----------|---------|------------------|
-| Completeness | *Apakah semua data point terkumpul?* | | |
-| Consistency | *Apakah ada kontradiksi internal?* | | |
-| Validity | *Apakah benar-benar mengukur yang dimaksud?* | | |
-| Representativeness | *Apakah sampel mewakili populasi target?* | | |
+| Completeness | Apakah semua data point terkumpul?| Belum tentu beberapa pelaku usaha kecil tidak mencatat omzet secara rinci, apalagi UMKM rumahan | Minta responden mengisi estimasi omzet dengan rentang (misal: Rp1–5 juta, Rp5–10 juta) agar tetap bisa diisi walau tidak ada catatan pasti |
+| Consistency |Apakah ada kontradiksi internal? | Bisa terjadi  responden mengaku omzet naik tapi frekuensi transaksi dilaporkan turun | Tambahkan pertanyaan cross-check di kuesioner, misal: "Berapa rata-rata pesanan masuk per minggu?" lalu bandingkan dengan jawaban omzet |
+| Validity | Apakah benar-benar mengukur yang dimaksud? | Risiko ada kenaikan omzet bisa karena faktor lain (diskon besar, tren produk viral) bukan karena e-commerce | Tanyakan secara eksplisit: "Berapa persen penjualan Anda berasal dari platform online?" untuk memisahkan kontribusi e-commerce |
+| Representativeness | Apakah sampel mewakili populasi target?| Belum tentu — jurnal menyebut ada kesenjangan infrastruktur antara kota besar dan kota kecil di Indonesia | Pastikan sampel mencakup pelaku usaha dari berbagai daerah, tidak hanya Jawa/kota besar |
 
 ---
 
@@ -136,5 +136,5 @@ Bayangkan data yang akan dikumpulkan dari eksperimen. Evaluasi 4 dimensi kualita
 > Mengapa memilih metrik setelah melihat data dianggap p-hacking? Apa bedanya dengan eksplorasi data yang sah?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Kalau metrik dipilih setelah data ada, peneliti (sadar atau tidak) cenderung pilih metrik yang hasilnya bagus atau sesuai harapan. Ini masalah serius karena kesimpulannya terlihat valid padahal sebetulnya sudah "diarahkan" dari awal. Sama seperti menembak dulu ke tembok lalu menggambar sasarannya di sekitar lubang peluru — hasilnya kelihatan tepat sasaran, tapi tidak jujur.
+Bedanya dengan eksplorasi yang sah: kalau dari awal sudah ditetapkan metrik utama (confirmatory), lalu saat analisis ditemukan pola menarik lain dan itu dilaporkan secara terpisah sebagai temuan eksploratif — itu boleh dan bahkan berguna. Yang tidak boleh adalah menggeser metrik eksploratif itu menjadi seolah-olah itu metrik utama yang sudah direncanakan sejak awal. Dalam konteks jurnal e-commerce ini misalnya: kalau awalnya metrik utama adalah omzet, lalu ternyata data kepuasan pelanggan lebih "menarik", tidak boleh tiba-tiba menukar keduanya tanpa mengakuinya.
