@@ -43,19 +43,6 @@ Jika variabel tidak bisa di-map ke komponen apapun → arsitektur perlu didesain
 - **Configuration-driven** — Ubah config (YAML/JSON), bukan code
 - **Feature toggles** — On/off flag untuk ablation study
 
-  Contoh config YAML dengan feature toggles:
-  ```yaml
-  model:
-    type: cnn          # IV: ganti "rf" untuk kondisi baseline
-  features:
-    use_temporal: true  # toggle komponen temporal
-    use_normalization: true  # toggle preprocessing
-  experiment:
-    seed: 42
-    runs: 5
-  ```
-  Dengan pendekatan ini, berbeda kondisi eksperimen = berbeda satu baris config, **tanpa mengubah kode**.
-
 ### Research vs Engineering
 
 | Aspek | Engineering | Research |
@@ -80,25 +67,30 @@ Jika variabel tidak bisa di-map ke komponen apapun → arsitektur perlu didesain
 ```
 SYSTEM-EXPERIMENT MAPPING
 
-Research Question: ____________________
+Research Question: Bagaimana penggunaan e-commerce dapat membantu perkembangan bisnis di era digital?
 
 Variable → Component Mapping:
 | Variabel | Tipe | Komponen Sistem | Cara Manipulasi/Pengukuran |
 |----------|------|-----------------|---------------------------|
-|          | IV   |                 |                           |
-|          | DV   |                 |                           |
-|          | CV   |                 |                           |
+| Penggunaan e-commerce | IV | Marketplace atau website penjualan online | Menggunakan platform e-commerce untuk transaksi |
+| Jumlah penjualan | DV | Sistem laporan penjualan | Dilihat dari peningkatan transaksi penjualan |
+| Produk yang dijual | CV | Database produk | Produk tetap sama selama penelitian |
+| Harga produk | CV | Sistem pengaturan harga | Harga tidak diubah saat eksperimen |
+| Sistem pembayaran online | IV | Payment gateway | Mengaktifkan metode pembayaran digital |
+| Kepuasan pelanggan | DV | Fitur ulasan pelanggan | Dilihat dari rating dan komentar pelanggan |
+
+
 
 4 Prinsip Desain:
-  [ ] Traceability — Setiap komponen bisa ditelusuri ke variabel
-  [ ] Variable Isolation — IV bisa diubah tanpa mengubah CV
-  [ ] Measurement Integration — Pengukuran DV built-in
-  [ ] Reproducibility — Setup bisa direkonstruksi
+  [v] Traceability — Setiap komponen bisa ditelusuri ke variabel
+  [v] Variable Isolation — IV bisa diubah tanpa mengubah CV
+  [v] Measurement Integration — Pengukuran DV built-in
+  [v] Reproducibility — Setup bisa direkonstruksi
 
 Experimental Setup:
-  Input data     : ____________________
-  Parameter      : ____________________
-  Output format  : ____________________
+  Input data     : Data transaksi penjualan online
+  Parameter      : Produk, harga, dan metode pembayaran
+  Output format  : Grafik dan laporan hasil penjualan
 ```
 
 ---
@@ -107,15 +99,18 @@ Experimental Setup:
 
 Gunakan RQ dan variabel dari WS-05. Petakan ke komponen sistem.
 
-**RQ:** __________________________________________________
+**RQ:** Bagaimana penggunaan e-commerce dapat membantu perkembangan bisnis di era digital?
 
-| Variabel | Tipe | Komponen Sistem | Cara Manipulasi / Pengukuran |
+| Variabel | Tipe | Komponen Sistem | Cara Manipulasi/Pengukuran |
 |----------|------|-----------------|---------------------------|
-| *Contoh: Jenis model* | *IV* | *Modul classifier (swap RF ↔ CNN)* | *Ganti config `model_type`* |
-| | DV | | |
-| | CV | | |
+| Penggunaan e-commerce | IV | Marketplace atau website penjualan online | Menggunakan platform e-commerce untuk transaksi |
+| Jumlah penjualan | DV | Sistem laporan penjualan | Dilihat dari peningkatan transaksi penjualan |
+| Produk yang dijual | CV | Database produk | Produk tetap sama selama penelitian |
+| Harga produk | CV | Sistem pengaturan harga | Harga tidak diubah saat eksperimen |
+| Sistem pembayaran online | IV | Payment gateway | Mengaktifkan metode pembayaran digital |
+| Kepuasan pelanggan | DV | Fitur ulasan pelanggan | Dilihat dari rating dan komentar pelanggan |
 
-**Apakah semua variabel bisa di-map?** [ ] Ya / [ ] Tidak
+**Apakah semua variabel bisa di-map?** [v] Ya / [ ] Tidak
 > Jika tidak, komponen apa yang perlu ditambahkan? _________
 
 ---
@@ -126,14 +121,14 @@ Evaluasi desain sistem terhadap 4 prinsip.
 
 | Prinsip | Status | Bukti / Penjelasan |
 |---------|--------|-------------------|
-| Traceability | *Contoh: ✅ — setiap modul punya label variabel* | |
-| Modularity | | |
-| Controllability | | |
-| Measurability | | |
+| Traceability | v | Komponen sistem sesuai dengan variabel penelitian |
+| Modularity | v | Setiap fitur dapat digunakan secara terpisah |
+| Controllability | v | Harga dan produk dapat dikontrol |
+| Measurability | v | Data transaksi dan ulasan pelanggan bisa diukur |
 
-**Prinsip mana yang paling sulit dipenuhi?** _______________
+**Prinsip mana yang paling sulit dipenuhi?** Measurability
 **Strategi untuk mengatasinya:**
-> ___________________________________________________
+> Menggunakan fitur laporan otomatis agar data penjualan dan transaksi lebih mudah dicatat.
 
 ---
 
@@ -146,14 +141,14 @@ Jika sistem memiliki 3 komponen utama, rencanakan ablation study.
 
 | Kondisi | Komponen A | Komponen B | Komponen C | Hasil yang Diharapkan |
 |---------|-----------|-----------|-----------|----------------------|
-| Full | *Contoh: ✅ CNN* | *Contoh: ✅ Temporal features* | *Contoh: ✅ Z-score norm* | *Baseline penuh* |
-| – A | ❌ (ganti RF) | ✅ | ✅ | |
-| – B | ✅ | ❌ (tanpa temporal) | ✅ | |
-| – C | ✅ | ✅ | ❌ (tanpa normalisasi) | |
+| Full | ✅ Marketplace | ✅ Pembayaran Online | ✅ Promosi Digital | Penjualan meningkat |
+| Tanpa fitur chat | ❌ | ✅ | ✅ | Pelanggan kesulitan bertanya tentang produk |
+| Tanpa sistem diskon | ✅ | ❌ | ✅ | Jumlah pembelian menurun |
+| Tanpa pengiriman online | ✅ | ✅ | ❌ | Proses belanja menjadi kurang praktis |
 
-**Komponen mana yang diprediksi paling berkontribusi?** _____
+**Komponen mana yang diprediksi paling berkontribusi?** Marketplace online
 **Mengapa?**
-> ___________________________________________________
+> Karena marketplace membantu penjual menjangkau lebih banyak pelanggan dengan lebih mudah.
 
 ---
 
@@ -162,5 +157,4 @@ Jika sistem memiliki 3 komponen utama, rencanakan ablation study.
 > Apa risiko jika sistem dibangun seperti produk (monolitik, fitur lengkap) lalu baru dilakukan eksperimen? Mengapa arsitektur modular penting untuk riset?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Jika sistem dibuat terlalu kompleks seperti produk asli, maka proses penelitian akan lebih sulit karena semua fitur saling berhubungan. Arsitektur modular penting supaya setiap bagian sistem bisa diuji satu per satu dan hasil penelitian lebih jelas.
