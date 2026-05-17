@@ -68,36 +68,36 @@ Ancaman validitas harus diidentifikasi **sebelum** eksperimen dan mitigasinya di
 ```
 EXPERIMENT DESIGN
 
-Research Question : ____________________
-Hypothesis        : ____________________
-Tipe Eksperimen   : [ ] Comparison  [ ] Ablation  [ ] Parameter
+Research Question : Bagaimana penggunaan e-commerce dapat meningkatkan penjualan bisnis di era digital?
+Hypothesis        : Penggunaan e-commerce dapat membantu meningkatkan penjualan dan memperluas jangkauan pasar.
+Tipe Eksperimen   : [v] Comparison  [ ] Ablation  [ ] Parameter
 
 Kondisi Eksperimen:
 | Kondisi | Deskripsi | IV Value | CV Settings |
 |---------|-----------|----------|-------------|
-| Control |           |          |             |
-| Treatment |         |          |             |
+| Control | Penjualan dilakukan secara offline | Tanpa e-commerce | Produk, harga, dan waktu penjualan dibuat sama |
+| Treatment | Penjualan menggunakan marketplace online |  Menggunakan e-commerce | Produk, harga, dan waktu penjualan dibuat sama |
 
 Fairness Checklist:
-  [ ] Dataset identik untuk semua kondisi
-  [ ] Preprocessing setara
-  [ ] Tuning effort setara
-  [ ] Environment identik
-  [ ] Metrik evaluasi sama
+  [v] Dataset identik untuk semua kondisi
+  [v] Preprocessing setara
+  [v] Tuning effort setara
+  [v] Environment identik
+  [v] Metrik evaluasi sama
 
 Threat Analysis:
 | Threat Type | Ancaman Spesifik | Mitigasi |
 |-------------|-----------------|----------|
-| Internal    |                 |          |
-| External    |                 |          |
-| Construct   |                 |          |
-| Conclusion  |                 |          |
+| Internal | Jumlah pelanggan berbeda | Menggunakan jumlah responden yang hampir sama |
+| External | Hanya cocok untuk satu jenis usaha | Menggunakan beberapa contoh bisnis |
+| Construct | Penjualan tidak selalu menunjukkan kepuasan pelanggan | Menambahkan data ulasan pelanggan |
+| Conclusion | Data penelitian terlalu sedikit | Menambah jumlah data penelitian |
 
 Statistical Plan:
-  Uji statistik   : ____________________
-  Justifikasi      : ____________________
-  Alpha            : ____________________
-  Effect size min  : ____________________
+  Uji statistik   : Perbandingan jumlah penjualan
+  Justifikasi      : Untuk melihat perbedaan hasil penjualan
+  Alpha            : 0.05
+  Effect size min  : Penjualan meningkat minimal 10%
 ```
 
 ---
@@ -106,13 +106,13 @@ Statistical Plan:
 
 Susun desain eksperimen berdasarkan RQ, variabel, dan sistem dari WS-04 sampai WS-06.
 
-**RQ:** __________________________________________________
-**Tipe eksperimen:** [ ] Comparison / [ ] Ablation / [ ] Parameter
+**RQ:** Apakah penggunaan e-commerce berpengaruh terhadap perkembangan bisnis pelaku usaha di era digital?
+**Tipe eksperimen:** [v] Comparison / [ ] Ablation / [ ] Parameter
 
 | Kondisi | Deskripsi | IV Value | CV Settings |
 |---------|-----------|----------|-------------|
-| Control | *Contoh: RF baseline dari literatur* | *RF* | *Dataset X, 80:20 split, seed 42* |
-| Treatment | | | |
+| Control | Pelaku usaha menjalankan penjualan tanpa menggunakan e-commerce secara aktif | Penggunaan e-commerce rendah / tidak aktif | Produk sama, harga produk tetap, periode pengamatan sama, jenis usaha sama|
+| Treatment | Pelaku usaha menggunakan e-commerce secara aktif untuk penjualan dan promosi | Penggunaan e-commerce aktif | Produk sama, harga produk tetap, periode pengamatan sama, jenis usaha sama |
 
 ---
 
@@ -122,14 +122,14 @@ Evaluasi apakah desain eksperimen di Latihan 1 sudah fair.
 
 | Kriteria | Status | Detail |
 |----------|--------|--------|
-| Dataset identik | *Contoh: ✅ — sama-sama pakai CIC-MalMem-2022* | |
-| Preprocessing setara | | |
-| Tuning effort setara | | |
-| Environment identik | | |
-| Metrik evaluasi sama | | |
+| Dataset identik | ✅ | Data yang digunakan berasal dari jenis usaha dan periode pengamatan yang sama |
+| Preprocessing setara |✅ | Semua data penjualan dibersihkan dan diproses dengan cara yang sama |
+| Tuning effort setara | ✅ | Perlakuan dan pengamatan dilakukan dengan prosedur yang sama pada setiap kondisi |
+| Environment identik | ✅ | Pengujian dilakukan pada platform dan kondisi penelitian yang sama |
+| Metrik evaluasi sama | ✅ | Pengukuran menggunakan metrik yang sama yaitu peningkatan omzet dan jumlah penjualan |
 
-**Ada yang tidak fair?** [ ] Ya / [ ] Tidak
-> Jika ya, bagaimana cara memperbaikinya? ________________
+**Ada yang tidak fair?** [ ] Ya / [v] Tidak
+> Jika ya, bagaimana cara memperbaikinya? Semua kondisi dibuat sama agar hasil perbandingan lebih objektif. Perbedaan utama hanya pada penggunaan e-commerce aktif atau tidak aktif, sehingga pengaruh variabel lain dapat diminimalkan.
 
 ---
 
@@ -139,14 +139,14 @@ Identifikasi ancaman validitas untuk desain eksperimen ini.
 
 | Threat Type | Ancaman Spesifik | Mitigasi |
 |-------------|-----------------|----------|
-| Internal | *Contoh: Data leakage antara train-test* | *Contoh: Gunakan stratified split, validasi tidak ada overlap* |
-| External | | |
-| Construct | | |
-| Conclusion | | |
+| Internal | Kenaikan penjualan bisa dipengaruhi faktor lain seperti diskon, musim belanja, atau tren produk | Menggunakan produk dan periode pengamatan yang sama serta mengontrol variabel lain |
+| External | Hasil penelitian mungkin hanya sesuai pada jenis usaha tertentu | Menggunakan sampel dari beberapa jenis usaha agar lebih beragam |
+| Construct | Perkembangan bisnis hanya diukur dari omzet, padahal ada faktor lain seperti kepuasan pelanggan | Menambahkan metrik pendukung seperti jumlah pelanggan baru atau rating pelanggan |
+| Conclusion | Jumlah data atau responden terlalu sedikit sehingga hasil kurang mewakili | Menambah jumlah sampel dan memperpanjang waktu pengamatan |
 
-**Ancaman mana yang paling sulit dimitigasi?** _____________
+**Ancaman mana yang paling sulit dimitigasi?** External validity
 **Mengapa?**
-> ___________________________________________________
+> Karena setiap jenis usaha memiliki karakteristik yang berbeda. Hasil pada satu jenis bisnis belum tentu sama jika diterapkan pada bisnis lain atau platform yang berbeda.
 
 ---
 
@@ -155,6 +155,6 @@ Identifikasi ancaman validitas untuk desain eksperimen ini.
 > Sebuah paper melaporkan "metode kami mengalahkan semua baseline." Apa 3 pertanyaan pertama yang harus diajukan untuk mengevaluasi klaim ini?
 
 **Jawaban:**
-1. ___________________________________________________
-2. ___________________________________________________
-3. ___________________________________________________
+1. Apakah semua metode diuji menggunakan dataset dan kondisi yang sama?
+2. Apakah proses eksperimen dilakukan secara adil, misalnya preprocessing dan parameter yang digunakan setara?
+3. Apakah hasil yang diperoleh sudah diuji secara statistik dan jumlah datanya cukup?
