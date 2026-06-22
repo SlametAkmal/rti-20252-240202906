@@ -73,32 +73,35 @@ Mengandalkan "install library terbaru" berbahaya: versi berbeda = perilaku berbe
 EXPERIMENT SETUP DOCUMENTATION
 
 Hardware:
-  CPU     : ____________________
-  RAM     : ____________________
-  GPU     : ____________________
-  Storage : ____________________
+  CPU     : Amd Ryzen 5
+  RAM     : 8 GB
+  GPU     : Amd Radeon Graphics
+  Storage : Asus Vivobook Go 14
 
 Software:
-  OS        : ____________________
-  Runtime   : ____________________
-  Framework : ____________________
+  OS        : Windows (11)
+  Runtime   : OpenJDK 17 LTS (Java 17.0.19) / Python 3.13.13
+  Framework : JMH (Java Microbenchmark Harness) 1.37
 
 Dependencies:
 | Library | Version | Sumber | Hash/Checksum |
 |---------|---------|--------|---------------|
-|         |         |        |               |
-|         |         |        |               |
+| numpy | 2.3.1 | PyPI | - |
+| pandas | 2.3.0 | PyPI | - |
+| matplotlib | 3.10.3 | PyPI | - |
+| scipy | 1.16.0 | PyPI | - |
+| openpyxl | 3.1.5 | PyPI | - |
 
 Konfigurasi:
-  Config file     : ____________________
-  Random seed     : ____________________
-  Hyperparameters : ____________________
+  Config file     : requirements.txt
+  Random seed     : 42
+  Hyperparameters : Tidak digunakan (penelitian tidak menggunakan model machine learning)
 
 Reproducibility Check:
-  [ ] Dependency terdokumentasi (requirements.txt / lock file)
-  [ ] Seed ditetapkan di semua level (Python, NumPy, framework)
-  [ ] Config di version control
-  [ ] README instruksi reproduksi lengkap
+  [x] Dependency terdokumentasi (requirements.txt / lock file)
+  [x] Seed ditetapkan di semua level (Python, NumPy, framework)
+  [x] Config di version control
+  [x] README instruksi reproduksi lengkap
 ```
 
 ---
@@ -109,23 +112,23 @@ Dokumentasikan environment untuk eksperimen Anda (boleh environment saat ini ata
 
 | Komponen | Spesifikasi |
 |----------|------------|
-| CPU | *Contoh: Intel Core i7-12700H, 14 Core* |
-| RAM | *Contoh: 32 GB DDR5* |
-| GPU | *Contoh: NVIDIA RTX 3060 6GB / CPU-only jika tidak ada GPU* |
-| OS | *Contoh: Ubuntu 22.04 LTS / Windows 11* |
-| Runtime | |
-| Framework | |
-| Random Seed | |
+| CPU | AMD Ryzen 5 |
+| RAM | 8 GB |
+| GPU | AMD Radeon Graphics |
+| OS | Windows 11 64-bit |
+| Runtime | Python 3.13.13 |
+| Framework | Tidak menggunakan framework khusus (analisis menggunakan Python) |
+| Random Seed | 42 |
 
 **Dependencies (minimal 5):**
 
 | Library | Version | Alasan Dibutuhkan |
 |---------|---------|-------------------|
-| *Contoh: scikit-learn* | *1.3.2* | *Klasifikasi + evaluasi metrik* |
-| | | |
-| | | |
-| | | |
-| | | |
+| numpy | 2.3.1 | Operasi numerik dan pengolahan array pada data penelitian. |
+| pandas | 2.3.0 | Mengolah, membersihkan, dan menganalisis data penelitian e-commerce. |
+| matplotlib | 3.10.3 | Membuat grafik untuk visualisasi hasil analisis. |
+| scipy | 1.16.0 | Mendukung analisis statistik dan perhitungan ilmiah. |
+| openpyxl | 3.1.5 | Membaca dan menulis data penelitian dalam format Microsoft Excel (.xlsx). |
 
 ---
 
@@ -135,25 +138,23 @@ Rancang tes repeatability sederhana: jalankan kode yang sama 3× di environment 
 
 | Run | Seed | Metrik Utama | Hasil Sama? |
 |-----|------|-------------|-------------|
-| 1 | *Contoh: 42* | *Contoh: Accuracy* | — |
-| 2 | | | [ ] Ya / [ ] Tidak |
-| 3 | | | [ ] Ya / [ ] Tidak |
+| 1 | 42 | Jumlah data yang diproses dan hasil analisis | — |
+| 2 | 42 | Jumlah data yang diproses dan hasil analisis | [x] Ya / [ ] Tidak |
+| 3 | 42 | Jumlah data yang diproses dan hasil analisis | [x] Ya / [ ] Tidak |
 
 **Jika hasil berbeda, kemungkinan penyebab:**
 
-> Penyebab umum non-repeatability:
-> - **Thermal throttling** — CPU/GPU overheating pada run berturut-turut → clock speed turun → waktu eksekusi berubah
-> - **Background process** — antivirus scan, update OS, atau cloud sync aktif saat run berlangsung
-> - **Cache dari run sebelumnya** — hasil tersimpan di memori/disk sehingga run berikutnya tidak menjalankan komputasi penuh
-> - **Random state tidak dikontrol di semua level** — Python seed di-set, tapi NumPy/PyTorch/TensorFlow punya seed independen
-
+- Dataset mengalami perubahan sebelum proses analisis dijalankan.
+- Terdapat proses lain yang menggunakan sumber daya komputer sehingga memengaruhi waktu eksekusi.
+- Cache dari proses sebelumnya belum dibersihkan.
+- Versi library Python berbeda atau random seed tidak dikonfigurasi dengan benar.
 ___________________________________________________
 
 **Checklist kontrol yang sudah diterapkan:**
-- [ ] Random seed di-set di semua level
-- [ ] Tidak ada background process yang mengganggu
-- [ ] Cache dibersihkan antar-run
-- [ ] Config file yang sama untuk semua run
+- [v] Random seed di-set di Python dan NumPy.
+- [v] Tidak ada background process yang mengganggu.
+- [v] Cache dibersihkan antar-run
+- [v] Config file yang sama untuk semua run
 
 ---
 
@@ -162,25 +163,43 @@ ___________________________________________________
 Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 
 ```
-# Judul Eksperimen: ____________________
+# Judul Eksperimen: Analisis Data Peran E-Commerce dalam Mengembangkan Bisnis di Era Digital
 
 ## 1. Environment
-> (Salin spesifikasi dari Latihan 1)
+- CPU : AMD Ryzen 5 
+- RAM : 8 GB 
+- GPU : AMD Radeon Graphics 
+- OS : Windows 11 64-bit 
+- Runtime : Python 3.13.13 
+- Editor : Visual Studio Code 
+- Random Seed : 42
 
 ## 2. Installation
-> (Langkah instalasi, misal: "pip install -r requirements.txt")
+1. Clone repository GitHub. 
+2. Buka folder proyek menggunakan Visual Studio Code. 
+3. Buat virtual environment (opsional): python -m venv .venv
+4. Aktifkan virtual environment. 
+5. Install seluruh dependency: pip install -r requirements.txt
 
 ## 3. Data
-> (Deskripsi data: sumber, format, ukuran)
+> Dataset penelitian berisi data yang berkaitan dengan aktivitas e-commerce, seperti transaksi, penjualan, atau informasi pendukung lainnya. Data disimpan dalam format CSV atau Excel (.xlsx) dan digunakan sebagai bahan analisis.
 
 ## 4. Execution
-> (Command untuk menjalankan eksperimen)
+> Jalankan proses analisis menggunakan Python: python main.py atau python analysis.py (sesuaikan dengan nama file utama yang digunakan)
 
 ## 5. Configuration
-> (File config yang digunakan + parameter kunci)
+> 
+- Config file : requirements.txt 
+- Random Seed : 42 
+- Python Version : 3.13.13 
+- Library : NumPy, Pandas, Matplotlib, SciPy, OpenPyXL
 
 ## 6. Expected Output
-> (Contoh output yang diharapkan + format)
+> Program menghasilkan: 
+- Dataset yang telah diproses. 
+- Ringkasan hasil analisis. 
+- Visualisasi data dalam bentuk grafik. 
+- File hasil analisis (CSV/Excel) apabila diperlukan.
 ```
 
 ---
@@ -188,7 +207,10 @@ Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 ## Refleksi
 
 > Apakah eksperimen Anda saat ini bisa direproduksi oleh orang lain tanpa bantuan Anda? Komponen apa yang masih hilang?
-
-**Level saat ini:** [ ] Repeatability / [ ] Reproducibility / [ ] Belum keduanya
+> Eksperimen saat ini dapat direproduksi oleh orang lain selama menggunakan environment yang sama, versi Python yang sama, serta dependency yang telah didokumentasikan dalam requirements.txt. Selain itu, langkah instalasi dan cara menjalankan program telah dijelaskan pada README sehingga proses eksperimen dapat dilakukan kembali dengan hasil yang konsisten.
+**Level saat ini:** [ ] Repeatability / [x] Reproducibility / [ ] Belum keduanya
 **Komponen yang belum terdokumentasi:**
-> ___________________________________________________
+> Dataset yang digunakan beserta sumbernya secara rinci.
+- Dokumentasi struktur folder proyek.
+- Contoh input dan output hasil analisis.
+- Dokumentasi versi sistem operasi dan spesifikasi perangkat keras yang lebih detail.
