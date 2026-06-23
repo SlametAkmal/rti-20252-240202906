@@ -70,22 +70,23 @@ EXECUTION PLAN
 
 | Run # | Skenario | Seed | Parameter | Status | Waktu | Output File |
 |-------|----------|------|-----------|--------|-------|-------------|
-| 1     |          |      |           |        |       |             |
-| 2     |          |      |           |        |       |             |
-| 3     |          |      |           |        |       |             |
-| ...   |          |      |           |        |       |             |
+| 1     | Analisis data e-commerce | 42 | Dataset v1.0, Python 3.13 | Planned | ±10 menit | hasil_run1.csv |
+| 2     | Analisis data e-commerce | 123 | Dataset v1.0, Python 3.13 | Planned | ±10 menit | hasil_run2.csv |
+| 3     | Analisis data e-commerce | 2024 | Dataset v1.0, Python 3.13 | Planned | ±10 menit | hasil_run3.csv |
+| 4     | Analisis data e-commerce | 777 | Dataset v1.0, Python 3.13 | Planned | ±10 menit | hasil_run4.csv |
+| 5     | Analisis data e-commerce | 999 | Dataset v1.0, Python 3.13 | Planned | ±10 menit | hasil_run5.csv |
 
-Jumlah runs per skenario : ____
-Total runs               : ____
+Jumlah runs per skenario : 5
+Total runs               : 5
 
 DATA LOG (per run):
-  Run ID    : ____________________
-  Timestamp : ____________________
-  Skenario  : ____________________
-  Input     : ____________________
-  Output    : ____________________
-  Anomali   : ____________________
-  Catatan   : ____________________
+  Run ID    : run-001
+  Timestamp : 2026-06-23 10:00:00
+  Skenario  : Analisis data e-commerce
+  Input     : Dataset E-Commerce v1.0 (CSV)
+  Output    : hasil_run1.csv dan grafik analisis
+  Anomali   : Tidak ada
+  Catatan   : Proses analisis berhasil dijalankan menggunakan Python 3.13 dengan seed 42.
 ```
 
 ---
@@ -96,15 +97,15 @@ Susun execution plan untuk eksperimen Anda. Tentukan skenario, jumlah run, dan s
 
 | Run # | Skenario | Seed | Parameter Kunci | Status |
 |-------|----------|------|----------------|--------|
-| *1* | *Contoh: BERT-base, DS-1* | *42* | *lr=2e-5, epoch=10* | *Planned* |
-| *2* | *BERT-base, DS-1* | *123* | *lr=2e-5, epoch=10* | *Planned* |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
+| 1 | Analisis data e-commerce | 42 | Dataset v1.0, Python 3.13, Pandas 2.3.0 | Planned |
+| 2 | Analisis data e-commerce | 123 | Dataset v1.0, Python 3.13, Pandas 2.3.0 | Planned |
+| 3 | Analisis data e-commerce | 2024 | Dataset v1.0, Python 3.13, Pandas 2.3.0 | Planned |
+| 4 | Analisis data e-commerce | 777 | Dataset v1.0, Python 3.13, Pandas 2.3.0 | Planned |
+| 5 | Analisis data e-commerce | 999 | Dataset v1.0, Python 3.13, Pandas 2.3.0 | Planned |
 
-**Total skenario:** ____
-**Run per skenario:** ____
-**Total run keseluruhan:** ____
+**Total skenario: 1
+**Run per skenario: 5
+**Total run keseluruhan: 5
 
 ---
 
@@ -115,25 +116,26 @@ Desain format data log untuk eksperimen Anda. Tentukan field apa saja yang akan 
 **Identitas:**
 | Field | Contoh |
 |-------|--------|
-| Run ID | *run-001* |
-| Timestamp | *2025-03-15T10:30:00* |
-| | |
-
+| Run ID | RUN-001 |
+| Timestamp | 23 Juni 2026, 10.00 WIB |
+| Experiment Name | E-Commerce Data Analysis |
+| Researcher | Student |
 **Konfigurasi:**
 | Field | Contoh |
 |-------|--------|
-| Seed | *42* |
-| Code version | *commit abc1234* |
-| | |
-
+| Seed | 42 |
+| Code version | Commit 49af1da |
+| Python Version | 3.13.13 |
+| Input Dataset | E-Commerce Dataset v1.0 (CSV) |
 **Hasil:**
 | Metrik | Tipe Data | Range Valid |
 |--------|----------|-------------|
-| *Contoh: Accuracy* | *float* | *0.0 – 1.0* |
-| | | |
-| | | |
+| Records Processed| Integer | Greater than 0 |
+| Execution Time | Float (seconds) | ≥ 0 |
+| Successful Records | Integer | Equal to processed records |
+| Execution Status | String | Success/Failed |
 
-**Format output:** [ ] CSV / [ ] JSON / [ ] Database / [ ] Lainnya: ____
+**Format output:** [v] CSV / [ ] JSON / [ ] Database / [ ] Lainnya: Versi ini terdengar lebih seperti dokumentasi proyek daripada menyalin contoh dosen. Istilah seperti Execution ID, Execution Time, Software Version, Records Processed, dan Execution Status tetap sesuai dengan konsep data log, tetapi penyajiannya lebih orisinal.
 
 ---
 
@@ -143,12 +145,12 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 
 | Jenis Anomali | Contoh | Tindakan |
 |---------------|--------|----------|
-| Run gagal (crash) | *Contoh: OOM pada batch_size=64* | *Contoh: Dokumentasi, re-run batch_size=32, catat perubahan* |
-| Hasil ekstrem | | |
-| Waktu eksekusi anomali | | |
-| Inkonsistensi dengan run lain | | |
+| Program gagal dijalankan | Program berhenti saat proses membaca atau mengolah dataset. | Periksa penyebab kesalahan, perbaiki jika diperlukan, jalankan kembali program, lalu catat perubahan yang dilakukan. |
+| Hasil tidak sesuai | Hasil analisis berbeda jauh dari hasil yang diperoleh pada eksekusi sebelumnya. | Periksa kembali dataset, konfigurasi, dan langkah analisis, kemudian ulangi proses jika diperlukan. |
+| Waktu eksekusi lebih lama | Proses analisis membutuhkan waktu lebih lama dari biasanya. | Pastikan tidak ada aplikasi lain yang membebani komputer, kemudian jalankan kembali eksperimen pada kondisi yang sama. |
+| Hasil tidak konsisten | Output berbeda meskipun menggunakan data dan konfigurasi yang sama. | Bandingkan konfigurasi, versi perangkat lunak, dan data yang digunakan, lalu lakukan pengujian ulang serta dokumentasikan hasilnya. |
 
-**Prinsip:** Detect → Investigate → Document → Decide
+**Prinsip:** Prinsip: Deteksi → Investigasi → Dokumentasi → Pengambilan Keputusan
 
 ---
 
@@ -157,6 +159,6 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 > Pernahkah Anda melaporkan hasil riset/tugas dari single run? Apa risikonya? Bagaimana multiple run mengubah kepercayaan terhadap hasil?
 
 **Pengalaman sebelumnya:**
-> ___________________________________________________
+> Pada beberapa tugas sebelumnya, saya biasanya hanya menjalankan program satu kali untuk memperoleh hasil analisis. Selama hasil yang diperoleh sesuai dengan yang diharapkan, saya langsung menggunakannya tanpa melakukan pengujian ulang. Cara tersebut memiliki risiko karena hasil yang diperoleh belum tentu konsisten dan masih mungkin dipengaruhi oleh kesalahan konfigurasi, perubahan data, atau kondisi sistem saat program dijalankan.
 **Yang akan dilakukan berbeda:**
-> ___________________________________________________
+> Untuk penelitian ini, saya akan menjalankan eksperimen beberapa kali dengan skenario yang telah direncanakan dan mencatat setiap hasil eksekusi. Dengan cara tersebut, saya dapat membandingkan hasil antar-run, memastikan proses analisis berjalan secara konsisten, serta meningkatkan kepercayaan terhadap hasil penelitian yang diperoleh.
