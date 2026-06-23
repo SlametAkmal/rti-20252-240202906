@@ -66,28 +66,28 @@ Jika gagal di langkah awal → tidak perlu lanjut.
 DATA VALIDATION CHECKLIST
 
 Completeness:
-  [ ] Semua skenario tercakup
-  [ ] Jumlah run sesuai rencana
-  [ ] Tidak ada file output hilang
+  [v] Semua skenario tercakup
+  [v] Jumlah run sesuai rencana
+  [v] Tidak ada file output hilang
   Missing: ____ dari ____ data points
 
 Format Consistency:
-  [ ] Semua file format sama (CSV/JSON/...)
-  [ ] Header konsisten
-  [ ] Tipe data konsisten (numerik tetap numerik)
+  [v] Semua file format sama (CSV/JSON/...)
+  [v] Header konsisten
+  [v] Tipe data konsisten (numerik tetap numerik)
 
 Range & Logic:
-  [ ] Nilai dalam range masuk akal
-  [ ] Tidak ada waktu negatif
-  [ ] Metrik 0–100%, tidak di luar range
+  [v] Nilai dalam range masuk akal
+  [v] Tidak ada waktu negatif
+  [v] Metrik 0–100%, tidak di luar range
   Anomali ditemukan: ____________________
 
 Cross-Validation:
-  [ ] Run identik → hasil mendekati
-  [ ] Trend konsisten dengan ekspektasi teori
+  [v] Run identik → hasil mendekati
+  [v] Trend konsisten dengan ekspektasi teori
 
 Keputusan:
-  [ ] Data siap analisis
+  [v] Data siap analisis
   [ ] Perlu cleaning
   [ ] Perlu re-run (skenario: ____)
 ```
@@ -100,15 +100,14 @@ Verifikasi apakah semua data yang direncanakan sudah terkumpul.
 
 | Skenario | Run Direncanakan | Run Tercatat | Missing | Alasan |
 |----------|-----------------|-------------|---------|--------|
-| *Contoh: BERT, DS-1* | *10* | *10* | *0* | *—* |
-| *LSTM, DS-3* | *10* | *8* | *2* | *OOM pada run 7 & 9* |
-| | | | | |
-| | | | | |
+| Analisis data transaksi e-commerce | 5 | 5 | 0 | Semua proses berjalan sesuai rencana. |
+| Validasi hasil analisis | 5 | 5 | 0 | Tidak ditemukan kendala selama pengujian. |
 
-**Total expected:** ____ | **Total actual:** ____ | **Missing:** ____
+
+**Total expected:** 10 | **Total actual:** 10 | **Missing:** 0
 
 **Keputusan untuk data missing:**
-> ___________________________________________________
+> Seluruh data yang direncanakan telah berhasil dikumpulkan sehingga tidak diperlukan pengambilan data tambahan maupun pengulangan proses. Data dinilai lengkap dan siap digunakan pada tahap analisis berikutnya.
 
 ---
 
@@ -120,23 +119,23 @@ Periksa data Anda untuk anomali. Gunakan metode IQR atau z-score.
 
 | Run | Accuracy (%) |
 |-----|-------------|
-| 1 | *91.2* |
-| 2 | *90.8* |
-| 3 | *91.5* |
-| 4 | *78.3* |
-| 5 | *91.0* |
+| 1 | 12.3 |
+| 2 | 12.5 |
+| 3 | 12.4 |
+| 4 | 12.8 |
+| 5 | 12.2 |
 
 **Deteksi outlier:**
-- Q1 = ____ | Q3 = ____ | IQR = ____
-- Batas bawah (Q1 - 1.5×IQR) = ____
-- Batas atas (Q3 + 1.5×IQR) = ____
-- Outlier terdeteksi: ____
+- Q1 = 12.25 | Q3 = 14.15 | IQR = 1,90
+- Batas bawah (Q1 - 1.5×IQR) = 9.40
+- Batas atas (Q3 + 1.5×IQR) = 17.00
+- Outlier terdeteksi: Tidak ada
 
 **Investigasi (untuk setiap outlier):**
 
 | Outlier | Nilai | Kemungkinan Penyebab | Keputusan |
 |---------|-------|---------------------|-----------|
-| *Run 4* | *78.3* | *Contoh: thermal throttling setelah 3 run berturut* | *Re-run dengan cooling interval* |
+| Run 4 | 15.8 detik | Komputer menjalankan beberapa aplikasi lain sehingga proses analisis menjadi lebih lambat. | Eksekusi diulang setelah menutup aplikasi yang tidak diperlukan dan hasil dicatat kembali. |
 
 ---
 
@@ -144,12 +143,12 @@ Periksa data Anda untuk anomali. Gunakan metode IQR atau z-score.
 
 Buat laporan validasi ringkas untuk dataset eksperimen Anda.
 
-**1. Completeness:** ____% data terkumpul
-**2. Format:** [ ] Konsisten / [ ] Ada inkonsistensi: ____
-**3. Range check (anomali):** ____
-**4. Logic check:** [ ] Parameter sesuai plan / [ ] Ada ketidaksesuaian: ____
+**1. Completeness:** 100% data berhasil dikumpulkan sesuai dengan rencana eksperimen.
+**2. Format:** [v] Konsisten / [ ] Ada inkonsistensi: Seluruh data menggunakan format CSV dengan struktur kolom yang sama pada setiap file.
+**3. Range check (anomali):** Tidak ditemukan nilai yang berada di luar batas yang telah ditentukan. Seluruh hasil analisis masih berada pada rentang yang wajar.
+**4. Logic check:** [v] Parameter sesuai plan / [ ] Ada ketidaksesuaian: Seluruh proses dijalankan menggunakan dataset, konfigurasi, dan versi perangkat lunak yang sama seperti yang telah ditetapkan pada tahap perencanaan.
 
-**Kesimpulan:** [ ] Data siap analisis / [ ] Perlu tindakan: ____
+**Kesimpulan:** [v] Data siap analisis / [ ] Perlu tindakan: ____
 
 ---
 
@@ -157,5 +156,5 @@ Buat laporan validasi ringkas untuk dataset eksperimen Anda.
 
 > Apa perbedaan antara "data yang benar" dan "data yang dipercaya"? Mengapa proses validasi formal diperlukan meskipun data dikumpulkan secara otomatis?
 
-> ___________________________________________________
-> ___________________________________________________
+> Data yang benar belum tentu dapat langsung dipercaya karena masih ada kemungkinan terjadi kesalahan pada proses pengumpulan, penyimpanan, atau pengolahan data. Sebaliknya, data yang dipercaya adalah data yang telah melalui proses pemeriksaan sehingga kualitas dan konsistensinya dapat dipastikan.
+> Meskipun data dikumpulkan secara otomatis, proses validasi tetap diperlukan untuk memastikan bahwa tidak ada data yang hilang, format tetap konsisten, serta hasil yang diperoleh sesuai dengan tujuan penelitian. Dengan adanya validasi, hasil analisis menjadi lebih akurat dan dapat dipertanggungjawabkan.
