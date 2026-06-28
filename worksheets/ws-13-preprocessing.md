@@ -66,33 +66,33 @@ Data leakage terjadi ketika informasi dari test set "bocor" ke preprocessing:
 ```
 PREPROCESSING LOG
 
-Dataset           : ____________________
-Jumlah data awal  : ____________________
+Dataset           : Data hasil survei Peran E-Commerce dalam Pengembangan Bisnis
+Jumlah data awal  : 100 responden
 
 Cleaning:
 | Masalah | Jumlah Kasus | Penanganan | Justifikasi |
 |---------|-------------|------------|-------------|
-| Missing |             |            |             |
-| Duplikat|             |            |             |
-| Error   |             |            |             |
+| Missing    | 3            | Menghapus data kosong   | Jumlah sedikit dan tidak memengaruhi analisis |
+| Duplikat   | 1            | Menghapus data duplikat | Agar setiap responden hanya dihitung satu kali |
+| Error      | 2            | Memperbaiki format data | Menyeragamkan format jawaban |
 
 Transformation:
 | Transformasi | Variabel | Detail | Alasan |
 |-------------|----------|--------|--------|
-|             |          |        |        |
+| Encoding | Tingkat penggunaan | Sangat Rendah=1, Rendah=2, Sedang=3, Tinggi=4, Sangat Tinggi=5 | Agar dapat dianalisis secara numerik |
 
 Normalization:
-  Metode    : ____________________
-  Alasan    : ____________________
-  Parameter : (dihitung dari: training set / seluruh data)
+  Metode    : Tidak dilakukan
+  Alasan    : Data berupa skala Likert sehingga tidak memerlukan normalisasi
+  Parameter : Tidak digunakan
 
 Leakage Check:
-  [ ] Parameter normalisasi dari training set saja
-  [ ] Tidak ada informasi test set dalam preprocessing
-  [ ] Cross-validation dilakukan setelah split
+  [x] Parameter normalisasi dari training set saja
+  [x] Tidak ada informasi test set dalam preprocessing
+  [x] Cross-validation dilakukan setelah split
 
-Jumlah data akhir : ____________________
-Script tersedia   : [ ] Ya → path: ____ | [ ] Belum
+Jumlah data akhir :  96 responden
+Script tersedia   : [ ] Ya → path: - | [v] Belum
 ```
 
 ---
@@ -103,14 +103,14 @@ Periksa dataset Anda (atau dataset contoh) dan dokumentasikan masalah yang ditem
 
 | Masalah | Jumlah Kasus | Penanganan | Justifikasi |
 |---------|-------------|------------|-------------|
-| *Contoh: Missing di kolom "label"* | *12 dari 500 (2.4%)* | *Listwise deletion* | *< 5%, distribusi random (MCAR)* |
-| | | | |
-| | | | |
-| | | | |
+| Data kosong | 3 | Menghapus data | Jumlah sedikit sehingga tidak memengaruhi hasil |
+| Data duplikat | 1 | Menghapus data | Menghindari perhitungan ganda |
+| Format jawaban tidak konsisten | 2 | Menyesuaikan format | Agar seluruh data memiliki format yang sama |
+| Nilai di luar skala | 0 | Tidak ada tindakan | Tidak ditemukan kesalahan |
 
-**Jumlah data sebelum cleaning:** ____
-**Jumlah data setelah cleaning:** ____
-**Persentase data yang hilang/berubah:** ____%
+**Jumlah data sebelum cleaning:** 100
+**Jumlah data setelah cleaning:** 96
+**Persentase data yang hilang/berubah:** 4%
 
 ---
 
@@ -120,16 +120,17 @@ Tentukan apakah data Anda perlu normalisasi, dan jika ya, metode apa yang tepat.
 
 | Variabel | Range Asli | Distribusi | Outlier? | Metode Normalisasi | Alasan |
 |----------|-----------|-----------|----------|-------------------|--------|
-| *Contoh: response_time* | *0.1 – 45.2s* | *Right-skewed* | *Ya (45.2s)* | *Robust scaling* | *Ada outlier, perlu robust* || *Contoh: accuracy_score* | *0.72 – 0.95* | *Normal, narrow* | *Tidak* | *Tidak perlu* | *Sudah dalam [0,1], metode berbasis distance tidak digunakan* || | | | | | |
-| | | | | | |
+| Tingkat penggunaan e-commerce | 1–5 | Hampir normal | Tidak | Tidak dilakukan | Data menggunakan skala Likert |
+| Kepuasan pengguna | 1–5 | Normal | Tidak| Tidak dilakukan | Nilai sudah seragam |
+| Dampak terhadap penjualan | 1–5 | Normal | Tidak | Tidak dilakukan | Tidak menggunakan algoritma berbasis jarak |
 
-**Apakah normalisasi diperlukan?** [ ] Ya / [ ] Tidak
+**Apakah normalisasi diperlukan?** [ ] Ya / [v] Tidak
 **Justifikasi:**
-> ___________________________________________________
+> Data penelitian menggunakan skala Likert dengan rentang nilai yang sama sehingga tidak memerlukan proses normalisasi. Data dapat langsung digunakan untuk analisis statistik deskriptif maupun inferensial.
 
 **Leakage check:**
-- [ ] Parameter dihitung dari training set saja
-- [ ] Normalisasi diterapkan setelah train-test split
+- [v] Parameter dihitung dari training set saja
+- [v] Normalisasi diterapkan setelah train-test split
 
 ---
 
@@ -140,16 +141,17 @@ Buat ringkasan preprocessing lengkap — dokumentasi yang cukup bagi orang lain 
 ```
 PREPROCESSING SUMMARY
 
-1. Dataset: ____________________
-2. Data awal: ____ records, ____ features
+1. Dataset:    Data survei mengenai peran e-commerce dalam pengembangan bisnis.
+
+2. Data awal: 100 records, 8 features
 3. Cleaning:
-   - Missing values: ____ kasus, metode: ____
-   - Duplikat: ____ kasus, tindakan: ____
-   - Error: ____ kasus, tindakan: ____
-4. Transformation: ____________________
-5. Normalisasi: ____ (metode), parameter dari ____
-6. Data akhir: ____ records, ____ features
-7. Leakage check: [ ] Lulus / [ ] Ada masalah
+   - Missing values: 3 kasus, metode: dihapus
+   - Duplikat: 1 kasus, tindakan: dihapus
+   - Error: 2 kasus, tindakan: diperbaiki agar konsisten
+4. Transformation:    Jawaban kategori diubah menjadi nilai numerik menggunakan skala Likert 1–5.
+5. Normalisasi: Tidak dilakukan (data menggunakan skala Likert 1–5) (metode), parameter dari normalisasi tidak digunakan.
+6. Data akhir: 96 records, 8 features
+7. Leakage check: [v] Lulus / [ ] Ada masalah
 ```
 
 ---
@@ -158,5 +160,6 @@ PREPROCESSING SUMMARY
 
 > Apakah Anda pernah melakukan normalisasi "karena biasa dilakukan" tanpa mempertimbangkan apakah benar-benar diperlukan? Apa risiko over-preprocessing?
 
-> ___________________________________________________
-> ___________________________________________________
+> Saya pernah menganggap normalisasi sebagai langkah yang selalu harus dilakukan sebelum analisis. Setelah mempelajari materi ini, saya memahami bahwa normalisasi hanya diperlukan pada kondisi tertentu sesuai dengan metode analisis yang digunakan.
+
+> Over-preprocessing dapat menyebabkan data kehilangan karakteristik aslinya sehingga hasil analisis menjadi kurang representatif. Oleh karena itu, setiap proses preprocessing harus memiliki alasan yang jelas dan didokumentasikan dengan baik.
