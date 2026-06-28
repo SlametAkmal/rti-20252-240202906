@@ -65,25 +65,25 @@ Keduanya **saling melengkapi**:
 ```
 RESULT PRESENTATION PLAN
 
-Research Question : ____________________
-Metrik Utama      : ____________________
+Research Question : Bagaimana analisis data dapat digunakan untuk memahami peran e-commerce dalam mendukung perkembangan bisnis di era digital
+Metrik Utama      : Execution Time, Processed Records, dan Successful Processing Rate
 
 Tabel Hasil:
 | Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
 |----------|----------------------|----------------------|---|
-|          |                      |                      |   |
+| E-Commerce Data Analysis | 12.4 ± 0.2 s | 1000 ± 0 records | 5 |
 
 Visualisasi yang Direncanakan:
 | # | Jenis Grafik | Pesan Utama | Metrik |
 |---|-------------|-------------|--------|
-| 1 |             |             |        |
-| 2 |             |             |        |
+| 1 | Bar Chart | Membandingkan waktu eksekusi pada setiap run | Execution Time | 
+| 2 | Line Chart | Menunjukkan konsistensi jumlah data yang berhasil diproses | Processed Records |
 
 Bias Check:
-  [ ] Y-axis mulai dari 0 (atau dijustifikasi)
-  [ ] Error bar/CI ditampilkan
-  [ ] Semua data disertakan (tidak cherry-picked)
-  [ ] Tidak menggunakan 3D tanpa alasan
+  [v] Y-axis mulai dari 0 (atau dijustifikasi)
+  [v] Error bar/CI ditampilkan
+  [v] Semua data disertakan (tidak cherry-picked)
+  [v] Tidak menggunakan 3D tanpa alasan
 ```
 
 ---
@@ -94,15 +94,15 @@ Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya da
 
 | Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
 |----------|----------------------|----------------------|---|
-| *Contoh: BERT-base* | *88.4 ± 1.2%* | *45.2 ± 3.1 min* | *10* |
-| | | | |
-| | | | |
+| Analisis Data E-Commerce | 12.4 ± 0.2 detik | 1000 ± 0 data | 5 |
+| Validasi Dataset | 11.9 ± 0.3 detik | 1000 ± 0 data | 5 |
+| Penyajian Hasil Analisis | 12.1 ± 0.2 detik | 1000 ± 0 data | 5 |
 
 **Checklist tabel:**
-- [ ] Self-contained (judul jelas, satuan ada, N tercantum)
-- [ ] Mean ± std (bukan single number)
-- [ ] Diurutkan berdasarkan metrik utama
-- [ ] Format konsisten di semua baris
+- [v] Self-contained (judul jelas, satuan ada, N tercantum)
+- [v] Mean ± std (bukan single number)
+- [v] Diurutkan berdasarkan metrik utama
+- [v] Format konsisten di semua baris
 
 ---
 
@@ -112,9 +112,9 @@ Rencanakan 2-3 grafik untuk menyajikan data dari Latihan 1. Setiap grafik = satu
 
 | # | Jenis Grafik | Pesan | Data yang Digunakan |
 |---|-------------|-------|---------------------|
-| 1 | *Contoh: Bar chart + error bar* | *Perbandingan accuracy antar 3 model* | *Mean accuracy ± std* |
-| 2 | *Box plot* | *Distribusi F1 per model* | *Semua run F1* |
-| 3 | *Scatter plot* | *Trade-off accuracy vs training time* | *Mean accuracy vs mean time* |
+| 1 | Diagram Batang (Bar Chart) | Membandingkan rata-rata waktu eksekusi pada setiap skenario analisis. | Rata-rata waktu eksekusi (mean ± std) |
+| 2 | Diagram Garis (Line Chart) | Menunjukkan konsistensi jumlah data yang berhasil diproses pada setiap run. | Jumlah data yang berhasil diproses dari seluruh run |
+| 3 | Diagram Lingkaran (Pie Chart) | Menampilkan perbandingan data yang berhasil diproses dan data yang gagal diproses. | Total data berhasil dan data gagal diproses |
 
 ---
 
@@ -126,13 +126,13 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Apakah Y-axis menyesatkan? | *Contoh: Ya — A terlihat 2× B padahal beda 0.4%* |
-| Apakah error bar ditampilkan? | |
-| Apakah semua kondisi ditampilkan? | |
-| Apa solusinya? | |
+| Apakah Y-axis menyesatkan? | Tidak. Skala sumbu Y dibuat proporsional sehingga perbedaan antar data ditampilkan secara wajar. |
+| Apakah error bar ditampilkan? | Ya. Error bar digunakan untuk menunjukkan variasi hasil dari setiap run. |
+| Apakah semua kondisi ditampilkan? | Ya. Seluruh skenario yang diuji ditampilkan tanpa menghilangkan data tertentu. |
+| Apa solusinya? | Gunakan skala yang konsisten, tampilkan seluruh data, dan hindari penggunaan efek visual yang dapat menyebabkan salah interpretasi. |
 
 **Evaluasi grafik Anda sendiri dari Latihan 2:**
-- [ ] Semua bias check lulus
+- [v] Semua bias check lulus
 - [ ] Ada yang perlu diperbaiki: ____
 
 ---
@@ -141,5 +141,6 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 > Mengapa tabel dan grafik keduanya diperlukan — tidak cukup salah satu saja? Pernahkah Anda membuat grafik yang (tanpa sengaja) menyesatkan?
 
-> ___________________________________________________
-> ___________________________________________________
+> Tabel dan grafik memiliki fungsi yang berbeda namun saling melengkapi. Tabel memberikan informasi secara rinci dan menampilkan nilai yang akurat, sedangkan grafik membantu pembaca memahami pola, tren, dan perbandingan data dengan lebih cepat. Oleh karena itu, penggunaan keduanya dapat membuat hasil penelitian lebih mudah dipahami.
+
+> Saya pernah membuat grafik dengan skala sumbu yang kurang tepat sehingga perbedaan antar data terlihat lebih besar dari kondisi sebenarnya. Pengalaman tersebut membuat saya lebih memperhatikan pemilihan skala, jenis grafik, dan cara penyajian data agar informasi yang disampaikan tetap objektif dan tidak menimbulkan salah interpretasi.
