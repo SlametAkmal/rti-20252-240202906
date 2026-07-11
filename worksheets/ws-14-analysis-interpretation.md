@@ -80,32 +80,41 @@ ANALYSIS & INTERPRETATION
 1. Statistik Deskriptif:
    | Skenario | Mean | Std | Median | Min | Max | n |
    |----------|------|-----|--------|-----|-----|---|
-   |          |      |     |        |     |     |   |
+   | Pengaruh E-Commerce terhadap Kinerja Bisnis UMKM | 0,398 | 0,093 | - | - | - | 130 |
+   | Pengaruh Media Sosial terhadap Kinerja Bisnis UMKM | 0,148 | 0,105 | - | - | - | 130 |
+   | Pengaruh Transformasi Digital terhadap Kinerja Bisnis UMKM | 0,227 | 0,080 | - | - | - | 130 |
+   | Pengaruh Review Pelanggan terhadap Peluang UMKM | 0,425 | 0,083 | - | 18 | 36 | 107 |
+   | Pengaruh Strategi Pemasaran Digital terhadap Peluang UMKM | 0,189 | 0,081 | - | 18 | 35 | 107 |
+
+
+
 
 2. Uji Hipotesis:
-   Uji yang digunakan  : ____________________
-   Justifikasi          : ____________________
-   Hasil: p = ____, effect size (d/r/η²) = ____
-   CI 95%               : [____, ____]
+   Uji yang digunakan  : Analisis deskriptif melalui sintesis hasil penelitian terdahulu.
+   Justifikasi          : Penelitian ini menggunakan metode studi literatur sehingga tidak melakukan pengujian hipotesis secara langsung menggunakan data primer. Analisis dilakukan dengan membandingkan hasil penelitian dari beberapa jurnal yang relevan.
+   Hasil: p = Tidak dilakukan, effect size (d/r/η²) = Tidak dihitung
+   CI 95%               : Tidak tersedia karena penelitian tidak melakukan analisis statistik inferensial.
 
 3. Keputusan:
-   [ ] H₀ ditolak → H₁ diterima
+   [v] H₀ ditolak → H₁ diterima
    [ ] H₀ tidak ditolak
 
 4. Interpretasi:
-   Hubungan ke RQ       : ____________________
-   Practical significance: ____________________
-   Perbandingan literatur: ____________________
+   Hubungan ke RQ       : Berdasarkan hasil analisis beberapa jurnal, penerapan e-commerce berkontribusi terhadap peningkatan penjualan, perluasan pasar, efisiensi operasional, dan peningkatan daya saing pelaku usaha.
+   Practical significance: Implementasi e-commerce memberikan manfaat nyata bagi pelaku usaha melalui kemudahan transaksi, promosi digital, komunikasi dengan pelanggan, serta peningkatan akses pasar yang lebih luas.
+   Perbandingan literatur: Sebagian besar penelitian menunjukkan hasil yang konsisten bahwa e-commerce memberikan dampak positif terhadap perkembangan bisnis. Namun, besarnya pengaruh berbeda-beda karena dipengaruhi oleh karakteristik usaha, strategi pemasaran digital, tingkat adopsi teknologi, dan kemampuan sumber daya manusia.
 
 5. Limitation:
    | Jenis | Ancaman | Dampak | Mitigasi |
    |-------|---------|--------|----------|
-   |       |         |        |          |
+   | Internal Validity | Jumlah jurnal yang dianalisis masih terbatas | Analisis belum mewakili seluruh penelitian | Menambah jumlah referensi pada penelitian selanjutnya |
+   | External Validity | Sebagian besar jurnal berasal dari Indonesia | Generalisasi ke negara lain masih terbatas | Menambahkan jurnal internasional |
+   | Methodological | Tidak menggunakan data primer | Tidak dapat mengukur kondisi lapangan secara langsung | Mengombinasikan studi literatur dengan survei atau wawancara |
 
 6. Failure Analysis (jika H₀ tidak ditolak):
-   Penyebab potensial  : ____________________
-   Boundary condition   : ____________________
-   Insight              : ____________________
+   Penyebab potensial  : Perbedaan hasil penelitian dipengaruhi oleh variasi metode penelitian, objek penelitian, ukuran sampel, serta tingkat adopsi teknologi pada masing-masing pelaku usaha.
+   Boundary condition   : Penerapan e-commerce memberikan hasil yang lebih optimal pada usaha yang memiliki infrastruktur digital, sumber daya manusia yang memadai, dan strategi pemasaran yang baik.
+   Insight              : Keberhasilan e-commerce tidak hanya dipengaruhi oleh penggunaan platform digital, tetapi juga oleh kemampuan pelaku usaha dalam memanfaatkan teknologi, mengelola pemasaran digital, dan membangun kepercayaan pelanggan.
 ```
 
 ---
@@ -116,13 +125,13 @@ Tentukan uji statistik yang tepat untuk eksperimen Anda.
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Berapa grup yang dibandingkan? | *Contoh: 3 (BERT, LSTM, SVM)* |
-| Apakah data berpasangan (paired)? | |
-| Apakah distribusi normal? (uji normalitas) | |
-| **Uji yang dipilih:** | |
-| **Justifikasi:** | |
+| Berapa grup yang dibandingkan? | Tidak ada kelompok eksperimen yang dibandingkan. Penelitian menganalisis hasil dari 5 jurnal yang membahas peran e-commerce dalam pengembangan bisnis. |
+| Apakah data berpasangan (paired)? | Tidak. Penelitian tidak menggunakan data berpasangan karena tidak melakukan pengujian terhadap sampel yang sama. |
+| Apakah distribusi normal? (uji normalitas) | Tidak dilakukan. Penelitian menggunakan metode studi literatur sehingga tidak melakukan uji normalitas terhadap data. |
+| **Uji yang dipilih:** | Analisis deskriptif kualitatif (literature synthesis). |
+| **Justifikasi:** | Penelitian menggunakan data sekunder yang berasal dari jurnal ilmiah. Analisis dilakukan dengan membandingkan, mengelompokkan, dan menginterpretasikan hasil penelitian terdahulu tanpa melakukan pengujian statistik terhadap data primer. |
 
-**Effect size yang akan dilaporkan:** [ ] Cohen's d / [ ] Eta-squared / [ ] Lainnya: ____
+**Effect size yang akan dilaporkan:** [ ] Cohen's d / [ ] Eta-squared / [v] Lainnya: Tidak dihitung karena penelitian menggunakan metode studi literatur (literature review).
 
 ---
 
@@ -140,11 +149,11 @@ p = 0.045, Cohen's d = 0.74, CI 95% = [0.03, 2.77]
 
 | Aspek | Interpretasi |
 |-------|-------------|
-| Signifikansi statistik | *Contoh: p < 0.05 → signifikan pada α=0.05* |
-| Effect size | *Contoh: d=0.74 → medium-to-large effect* |
-| Practical significance | |
-| Hubungan ke RQ | |
-| Perbandingan literatur | |
+| Signifikansi statistik | Nilai p = 0,045 menunjukkan bahwa perbedaan hasil antara Model A dan Model B kecil kemungkinannya terjadi secara kebetulan, sehingga kedua model memiliki performa yang berbeda secara statistik. |
+| Effect size | Nilai Cohen's d = 0,74 mengindikasikan bahwa selisih performa kedua model cukup terlihat, meskipun tidak termasuk kategori yang sangat besar. |
+| Practical significance | Dari sisi penerapan, Model A memberikan tingkat akurasi yang lebih tinggi daripada Model B. Walaupun selisihnya tidak terlalu jauh, peningkatan tersebut dapat menjadi keuntungan jika sistem membutuhkan hasil yang lebih konsisten. |
+| Hubungan ke RQ | Temuan ini mendukung tujuan penelitian, yaitu membandingkan performa dua model untuk mengetahui model yang memberikan hasil lebih baik dalam menyelesaikan permasalahan yang diteliti. |
+| Perbandingan literatur | Hasil yang diperoleh sejalan dengan berbagai penelitian sebelumnya yang menunjukkan bahwa setiap model memiliki tingkat performa yang berbeda, sehingga pemilihan metode perlu disesuaikan dengan karakteristik data dan kebutuhan analisis. |
 
 ---
 
@@ -156,18 +165,18 @@ Latih kemampuan failure analysis: hipotesis TIDAK didukung. Apa yang bisa dipela
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Apakah ini "gagal"? | *Contoh: Bukan gagal total — hipotesis tidak terdukung adalah temuan yang valid dan bisa menjadi kontribusi.* |
-| Kemungkinan penyebab? | *Contoh: Metode baru menambah kompleksitas komputasi (+40% waktu) tanpa peningkatan F1 yang cukup — overhead tidak sebanding.* |
-| Boundary condition? | *Contoh: Metode ini hanya efektif ketika data ≥ 10.000 record; di dataset kecil (<1.000), baseline lebih stabil.* |
-| Insight yang bisa diambil? | *Contoh: Ada trade-off ukuran data vs kompleksitas — rekomendasikan hybrid approach yang adaptif berdasarkan ukuran dataset.* |
-| Apakah layak dilaporkan? Mengapa? | *Contoh: Ya — negative result + boundary condition analysis adalah kontribusi riset yang diakui komunitas (ex: ACL, SIGIR). Mencegah riset duplikasi yang berulang.* |
+| Apakah ini "gagal"? | Tidak. Walaupun metode baru belum mampu mengungguli baseline, hasil ini tetap memberikan informasi yang berguna mengenai batas kemampuan metode yang diuji. |
+| Kemungkinan penyebab? | Performa metode baru mungkin belum optimal karena parameter yang digunakan belum sesuai, jumlah data yang terbatas, atau karakteristik data kurang mendukung metode tersebut. |
+| Boundary condition? | Metode baru kemungkinan memberikan hasil yang lebih baik jika diterapkan pada dataset yang lebih besar, data yang lebih beragam, atau setelah dilakukan penyesuaian parameter. |
+| Insight yang bisa diambil? | Tidak semua metode baru akan menghasilkan performa yang lebih baik pada setiap kondisi. Pemilihan metode sebaiknya disesuaikan dengan karakteristik data dan tujuan penelitian. |
+| Apakah layak dilaporkan? Mengapa? | Ya. Hasil yang tidak sesuai hipotesis tetap penting untuk dilaporkan karena dapat menjadi referensi bagi penelitian selanjutnya dan membantu menghindari pengulangan pendekatan yang kurang efektif pada kondisi yang sama. |
 
 **Limitation terkait:**
 | Jenis | Ancaman | Dampak |
 |-------|---------|--------|
-| *Contoh: Statistical* | *Contoh: Hanya 5 run per skenario* | *Power test rendah* |
-| | | |
-| | | |
+| Metodologi | Pengujian hanya dilakukan pada satu jenis dataset | Hasil belum dapat digeneralisasikan untuk dataset lain |
+| Data | Jumlah sampel relatif terbatas | Performa metode mungkin belum mencerminkan kondisi sebenarnya |
+| Parameter | Belum dilakukan optimasi parameter secara menyeluruh | Hasil metode baru belum mencapai performa terbaik |
 
 ---
 
@@ -175,5 +184,5 @@ Latih kemampuan failure analysis: hipotesis TIDAK didukung. Apa yang bisa dipela
 
 > Apakah "failure" dalam riset benar-benar gagal, atau justru kontribusi? Bagaimana failure analysis mengubah cara Anda melihat hasil negatif?
 
-> ___________________________________________________
+> Failure dalam penelitian tidak selalu berarti penelitian tersebut gagal. Hasil yang tidak sesuai dengan hipotesis tetap memiliki nilai karena dapat menunjukkan keterbatasan suatu metode atau kondisi tertentu yang memengaruhi hasil penelitian. Melalui failure analysis, saya belajar bahwa hasil negatif tetap penting untuk dianalisis dan dilaporkan karena dapat menjadi masukan bagi penelitian selanjutnya serta membantu menentukan pendekatan yang lebih tepat di masa depan.
 > ___________________________________________________
