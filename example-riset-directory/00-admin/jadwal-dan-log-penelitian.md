@@ -16,18 +16,27 @@ Catatan kronologis pelaksanaan tiap tahap (sumber: riwayat commit git & dokumen 
 
 ## Status Ringkas
 
-- **Tahap 1–4**: Selesai (dataset final: matrix 400 run / 40 replikasi per kombinasi, 2026-06-15).
-- **Tahap 5**: Konten naskah selesai dengan statistik n=40 (termasuk tinjauan pustaka & verifikasi CVE-2026-48524); menyisakan keputusan bahasa final dan pemindahan ke template jurnal tujuan (dilakukan oleh peneliti).
+- **Tahap 1 (Perumusan Topik & Rumusan Masalah):** Selesai — topik penelitian ditetapkan dan rumusan masalah disusun.
+- **Tahap 2 (Pengumpulan Literatur):** Selesai — lima jurnal utama yang relevan berhasil dikumpulkan dan diseleksi.
+- **Tahap 3 (Analisis Literatur):** Selesai — dilakukan perbandingan hasil penelitian, identifikasi persamaan, perbedaan, serta research gap.
+- **Tahap 4 (Penyusunan Laporan):** Selesai — laporan penelitian, pembahasan, dan kesimpulan telah disusun.
+- **Tahap 5 (Presentasi & Persiapan Sidang):** Selesai — slide presentasi dan daftar pertanyaan antisipasi telah disiapkan.
 
 ## Item Tindak Lanjut (Checklist Sebelum Submission)
 
-- [x] Lengkapi matriks literatur dengan paper *related work* nyata ([02-literatur/matriks-literatur.md](../02-literatur/matriks-literatur.md)) — 18 referensi terverifikasi
-- [x] Verifikasi CVE-2026-48524 terhadap basis data NVD/MITRE — terkonfirmasi via GHSA-fhv5-28vv-h8m8 (PyJWT, CVSS 3.7)
-- [ ] Tetapkan bahasa final naskah (Indonesia/Inggris) sesuai jurnal tujuan
-- [ ] Pindahkan konten [07-manuskrip/naskah-jurnal.md](../07-manuskrip/naskah-jurnal.md)/`.docx` ke template jurnal tujuan
-- [ ] Finalisasi penempatan figure/tabel sesuai gaya jurnal
-- [ ] Review akhir seluruh klaim numerik agar konsisten antar dokumen (lihat daftar pada [07-manuskrip/00-outline.md](../07-manuskrip/00-outline.md))
+- [v] Memastikan rumusan masalah sesuai dengan tujuan penelitian.
+- [v] Memverifikasi seluruh referensi yang digunakan berasal dari jurnal ilmiah yang relevan.
+- [v] Menyusun tabel perbandingan hasil penelitian dari setiap jurnal.
+- [v] Menganalisis persamaan, perbedaan, dan research gap antar penelitian.
+- [v] Menyusun kesimpulan berdasarkan hasil studi literatur.
+- [v] Melakukan pengecekan akhir terhadap format penulisan dan sitasi.
+- [v] Memastikan seluruh daftar pustaka sesuai dengan standar penulisan yang digunakan.
+- [v] Menyiapkan berkas laporan dan slide presentasi untuk dikumpulkan.
+
 
 ## Korespondensi
 
-*(belum ada — tambahkan catatan korespondensi dengan pembimbing/editor jurnal di sini saat tersedia)*
+- 2026-06-10 : Konsultasi penentuan topik penelitian.
+- 2026-06-13 : Diskusi mengenai pemilihan jurnal yang digunakan sebagai referensi.
+- 2026-06-16 : Konsultasi hasil analisis literatur dan penyusunan pembahasan.
+- 2026-06-19 : Review laporan akhir dan persiapan presentasi.
