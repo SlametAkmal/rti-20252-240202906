@@ -1,0 +1,7 @@
+| id | product_name        | category  |   price | stock |
+| -: | ------------------- | --------- | ------: | ----: |
+|  1 | Laptop ASUS         | Laptop    | 8500000 |    15 |
+|  2 | Mouse Logitech      | Aksesoris |  150000 |    80 |
+|  3 | Keyboard Mechanical | Aksesoris |  650000 |    35 |
+|  4 | SSD Samsung 1TB     | Storage   | 1750000 |    25 |
+|  5 | Monitor LG 24"      | Monitor   | 2350000 |    18 |

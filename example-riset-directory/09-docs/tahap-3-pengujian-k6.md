@@ -1,190 +1,336 @@
 # Tahap 3 — Skrip Pengujian k6 (Legitimate vs Attack Traffic)
 
-**Status:** Selesai — matrix 400 run (40 replikasi) sudah dijalankan, data tersedia di `04-data/` (matrix awal 50 run/5 replikasi diarsipkan di `04-data/_archive-50run-20260612/`)
-**Bergantung pada:** [tahap-2-implementasi-gateway.md](tahap-2-implementasi-gateway.md)
+**Status:** Selesai — matrix 400 run (40 replikasi) telah dijalankan  
+**Dataset:** tersedia pada `04-data/`  
+**Dataset awal:** 50 run / 5 replikasi diarsipkan pada `04-data/_archive-50run-20260612/`  
+**Bergantung pada:** [tahap-2-implementasi-gateway.md](tahap-2-implementasi-gateway.md)  
 **Lokasi kode:** [../05-kode/k6](../05-kode/k6)
 
 ---
 
-## Tujuan
+# 1. Tujuan Tahap
 
-Menyusun skenario k6 untuk membandingkan gateway pada mode `CACHE_MODE=none` (baseline) vs `CACHE_MODE=hybrid` (mitigasi), dengan tiga jenis traffic:
+Tahap ketiga penelitian bertujuan melakukan evaluasi performa dan efektivitas mitigasi terhadap JWKS Endpoint Flooding menggunakan load testing framework k6.
 
-- **Legitimate traffic** — request dengan JWT valid (`kid` dikenal), mensimulasikan beban normal.
-- **Attack traffic** — request dengan JWT ber-`kid` acak/tidak terdaftar, mensimulasikan JWKS Endpoint Flooding (CVE-2026-48524).
-- **Mixed traffic** — legitimate + attack berjalan bersamaan, untuk mengukur dampak mitigasi terhadap pengalaman user legit saat diserang.
+Tujuan pengujian:
 
-## Deliverable
+1. Membandingkan performa gateway tanpa mitigasi (`CACHE_MODE=none`) dan dengan mitigasi (`CACHE_MODE=hybrid`).
+2. Mengukur pengaruh serangan terhadap traffic legitimate.
+3. Mengukur pengurangan beban PostgreSQL akibat mekanisme caching.
+4. Mengevaluasi efektivitas:
+   - positive cache,
+   - negative cache,
+   - rate limiting.
+5. Menghasilkan dataset eksperimen untuk tahap analisis.
 
-- [x] Skrip k6 `legitimate.js` (steady load dengan `kid` valid)
-- [x] Skrip k6 `attack.js` (flooding dengan `kid` acak/pool, `KID_STRATEGY=unique|pool`)
-- [x] Skrip k6 `mixed.js` (kombinasi legitimate + attack secara bersamaan, dengan Trend custom per scenario)
-- [x] Konfigurasi skenario (VUs, durasi, ramping) untuk tiap kombinasi mode × traffic
-- [x] Output metrics k6 + snapshot `/metrics` gateway dalam format JSON/CSV untuk Tahap 4
-- [x] Smoke test (kalibrasi sebelum matrix penuh)
-- [x] Matrix penuh 400 run (2 cache_mode x 5 traffic_variant x 40 replikasi)
+---
 
-## Desain yang Diimplementasikan
+# 2. Desain Eksperimen
 
-### Struktur kode (`05-kode/k6/`)
+Eksperimen dilakukan dengan dua kondisi gateway:
 
-```
+| Mode | Deskripsi |
+|---|---|
+| `none` | Baseline tanpa cache dan rate limiting |
+| `hybrid` | Redis cache + negative cache + PostgreSQL rate limiting |
+
+---
+
+# 3. Skenario Traffic
+
+Terdapat tiga kelompok utama traffic:
+
+## 3.1 Legitimate Traffic
+
+Simulasi pengguna normal dengan:
+
+- JWT valid.
+- `kid` terdaftar.
+- Request berhasil diverifikasi.
+
+Tujuan:
+
+Mengukur performa normal gateway.
+
+---
+
+## 3.2 Attack Traffic
+
+Simulasi JWKS Endpoint Flooding.
+
+Karakteristik:
+
+- JWT menggunakan `kid` tidak dikenal.
+- Request dikirim dengan intensitas tinggi.
+- Memaksa gateway melakukan resolusi key.
+
+Terdapat dua strategi:
+
+### Unique Strategy
+
+KID_STRATEGY=unique
+
+
+Karakteristik:
+
+- setiap request memiliki `kid` baru,
+- menguji kemampuan rate limiting,
+- sulit dilindungi negative cache.
+
+---
+
+### Pool Strategy
+
+
+Karakteristik:
+
+- menggunakan kumpulan ±50 `kid` invalid,
+- menguji efektivitas negative cache,
+- lebih mendekati pola serangan berulang.
+
+---
+
+## 3.3 Mixed Traffic
+
+Gabungan:
+
+Tujuan:
+
+Mengukur apakah mitigasi tetap menjaga pengalaman pengguna normal ketika serangan berlangsung.
+
+---
+
+# 4. Struktur Kode k6
+
+Lokasi:
 05-kode/k6/
+
 ├── lib/
-│   ├── config.js              # BASE_URL, durasi, VU, KID_STRATEGY (env-driven)
-│   ├── tokens.js               # SharedArray token legit + pool kid attack
-│   ├── legit-tokens.json       # JWT valid (hasil gen-legit-tokens.sh)
-│   └── gen-legit-tokens.sh      # regenerasi legit-tokens.json dari seed Tahap 2
-├── legitimate.js                # constant-vus, JWT valid
-├── attack.js                    # ramping-vus 0->200, JWT kid acak/invalid
-├── mixed.js                     # legitimate + attack berjalan bersamaan
-├── monitor-resources.sh         # docker stats polling -> resources.csv
-├── run-scenario.sh               # runner 1 kombinasi -> 04-data/<run-id>/
+│ ├── config.js
+│ ├── tokens.js
+│ ├── legit-tokens.json
+│ └── gen-legit-tokens.sh
+│
+├── legitimate.js
+├── attack.js
+├── mixed.js
+│
+├── monitor-resources.sh
+├── run-scenario.sh
+├── run-matrix.sh
 └── README.md
-```
 
-### Skrip & skenario
 
-| Skrip | Executor | Default durasi | Env relevan |
-|---|---|---|---|
-| `legitimate.js` | `constant-vus` | 5 VU x 60s | `LEGIT_VUS`, `LEGIT_DURATION` |
-| `attack.js` | `ramping-vus` 0→200 | ramp 10s + hold 50s | `ATTACK_RAMP_DURATION`, `ATTACK_HOLD_DURATION`, `ATTACK_MAX_VUS`, `KID_STRATEGY` |
-| `mixed.js` | `legitimate` + `attack` sebagai dua k6 scenario bersamaan, masing-masing ditag `scenario` | sama seperti di atas | semua env di atas |
+---
 
-`KID_STRATEGY`:
-- `unique` — kid acak baru tiap request → menguji jalur **rate-limit**.
-- `pool` — kid dari pool ~50 nilai (dibuat sekali via `SharedArray`, dipakai berulang) → menguji **negative cache** + rate-limit, lebih representatif pola CVE.
+# 5. Implementasi Script Pengujian
 
-Token legitimate: 1 JWT valid (`kid: seed-key-01`, exp +24h) di-generate sekali dari seed Tahap 2 (`gen-legit-tokens.sh`), dipakai berulang via `SharedArray` — tidak ada signing dinamis di k6.
+## 5.1 legitimate.js
 
-### Matrix eksperimen
+Executor:
 
-| Dimensi | Nilai |
-|---|---|
-| `CACHE_MODE` | `none`, `hybrid` |
-| Traffic variant | `legitimate`, `attack-unique`, `attack-pool`, `mixed-unique`, `mixed-pool` |
-| Replikasi | 40 |
+5 VU × 60 detik
 
-Total: **2 × 5 × 40 = 400 run**, dijalankan via loop `run-matrix.sh` (membungkus `run-scenario.sh`, lihat [README](../05-kode/k6/README.md)).
 
-### Runner (`run-scenario.sh`)
+Fungsi:
 
-Untuk setiap kombinasi `<cache_mode> <traffic_variant> <replication>`:
+- mengirim request JWT valid,
+- mengukur latency pengguna normal.
 
-1. `CACHE_MODE=<mode> docker compose up -d --force-recreate gateway` (di `05-kode/gateway/`).
-2. Poll `GET /healthz` sampai sehat (timeout 30s).
-3. Start `monitor-resources.sh` di background → `resources.csv`.
-4. Snapshot `GET /metrics` gateway → `gateway-metrics-before.txt`.
-5. Jalankan skrip k6 via `docker run --rm --network gateway_default ... grafana/k6 run --summary-export ...`.
-6. Snapshot `GET /metrics` gateway → `gateway-metrics-after.txt`.
-7. Stop resource monitor, tulis `meta.json` (cache_mode, traffic_variant, kid_strategy, replication, waktu mulai/selesai, parameter rate-limit & TTL cache).
+Environment:
 
-`<run-id>` = `<cache_mode>__<traffic_variant>__rep<N>__<timestamp>`.
+```env
+LEGIT_VUS
+LEGIT_DURATION
 
-### Output per run (`04-data/<run-id>/`)
+5.2 attack.js
 
-```
-04-data/<cache_mode>__<traffic_variant>__rep<N>__<timestamp>/
-├── k6-summary.json            # ringkasan agregat k6 (--summary-export)
-├── gateway-metrics-before.txt # snapshot /metrics gateway sebelum run
-├── gateway-metrics-after.txt  # snapshot /metrics gateway sesudah run
-├── resources.csv               # timestamp,container,cpu_pct,mem_usage,mem_pct (~3s interval)
-└── meta.json                    # cache_mode, traffic_variant, kid_strategy, replication, waktu mulai/selesai
-```
+Executor:
+ramping-vus
 
-`k6-summary.json` mencakup `metrics.http_req_duration` (semua scenario) serta,
-untuk `mixed.js`, `metrics.legitimate_req_duration` dan
-`metrics.attack_req_duration` (Trend custom per scenario, di-tag via
-`res.timings.duration`) — dipakai Tahap 4 untuk menghitung D_perf traffic
-legitimate saat mixed (hybrid vs none).
+Konfigurasi:
+0 → 200 VU
 
-`gateway-metrics-*.txt` adalah scrape Prometheus (`jwksgw_*`) — delta
-before/after memberi angka eksak `jwksgw_db_queries_total`,
-`jwksgw_cache_requests_total`, `jwksgw_rate_limit_blocked_total`,
-`jwksgw_auth_requests_total` per run, untuk metrik "efektivitas mitigasi" di
-Tahap 4.
+Durasi:
+Ramp:
+10 detik
 
-`resources.csv` interval nominal 1s, tapi `docker stats --no-stream` untuk 3
-container butuh ~2-3s di Windows Docker Desktop sehingga interval aktual ~3s
-— cukup untuk tren CPU/memori pada window 60s.
+Hold:
+50 detik
 
-State Postgres/Redis **tidak** direset antar run — `window_start` per-detik
-pada rate limiter membuat data antar run tetap terisolasi.
+Environment:
 
-## Hasil Smoke Test
+ATTACK_MAX_VUS
+ATTACK_RAMP_DURATION
+ATTACK_HOLD_DURATION
+KID_STRATEGY
 
-Smoke test (`./run-scenario.sh hybrid legitimate smoke -e LEGIT_DURATION=15s -e LEGIT_VUS=2`)
-dijalankan untuk kalibrasi sebelum commit ke matrix 50-run.
+5.3 mixed.js
 
-**Iterasi pertama** memakai `--out json=...` (raw per-request metrics):
-menghasilkan `k6-output.json` **139MB / 571.414 baris** hanya dari 15 detik,
-2 VU, ~2.900 req/s. Diekstrapolasi ke matrix penuh (60s, attack.js ramping ke
-200 VU, 50 run) → volume data tidak terkelola (puluhan GB, risiko disk penuh).
+Menjalankan dua scenario secara bersamaan:
+Scenario 1:
+Legitimate traffic
 
-**Perbaikan**: ganti `--out json=...` → `--summary-export=...` (statistik
-agregat per metrik), tambah snapshot `/metrics` gateway before/after, dan
-tambah `Trend` custom per scenario di `mixed.js`.
 
-**Iterasi kedua** (setelah perbaikan), hasil untuk 15s/2VU/~2.900 req/s
-(43.531 requests, 100% checks lolos, `http_req_duration` avg ≈ 463µs):
+Scenario 2:
+Attack traffic
 
-| File | Ukuran |
-|---|---|
-| `k6-summary.json` | ~3.3 KB |
-| `gateway-metrics-before.txt` | ~165 B |
-| `gateway-metrics-after.txt` | ~2.3 KB |
-| `resources.csv` (15s @ ~3s interval) | ~1.2 KB |
+Menggunakan custom Trend:
+legitimate_req_duration
 
-Total per run < 10 KB — aman untuk matrix 50-run.
+attack_req_duration
 
-## Hasil Matrix Penuh (awal, 50 run — diarsipkan)
+6. Matriks Eksperimen
 
-Matrix awal 50 run (5 replikasi) dijalankan via loop `run-scenario.sh` (lihat
-di atas), total durasi run 2026-06-12T18:05Z – 2026-06-12T18:59Z (~54 menit
-untuk 50 run, lebih cepat dari estimasi karena overhead restart gateway/health
-check kecil pada mesin lokal). Semua 50 run selesai dengan `k6_exit_code: 0`.
+| Parameter       | Nilai                                                            |
+| --------------- | ---------------------------------------------------------------- |
+| Cache Mode      | none, hybrid                                                     |
+| Traffic Variant | legitimate, attack-unique, attack-pool, mixed-unique, mixed-pool |
+| Replikasi       | 40                                                               |
+| Total Run       | 400                                                              |
 
-Output: `04-data/<cache_mode>__<traffic_variant>__rep<N>__<timestamp>/`,
-total ukuran seluruh matrix **~1.7 MB** (vs. 139 MB untuk 1 smoke test 15
-detik sebelum perbaikan output strategy) — jauh lebih terkelola.
+7. Runner Eksperimen
 
-| cache_mode | traffic_variant | replikasi |
-|---|---|---|
-| none, hybrid | legitimate, attack-unique, attack-pool, mixed-unique, mixed-pool | 1-5 |
+Start Gateway
+      |
+      v
+Health Check
+      |
+      v
+Start Resource Monitor
+      |
+      v
+Snapshot /metrics BEFORE
+      |
+      v
+Run k6 Test
+      |
+      v
+Snapshot /metrics AFTER
+      |
+      v
+Simpan Metadata
 
-Dataset ini kemudian dipindahkan ke `04-data/_archive-50run-20260612/` setelah
-matrix 400-run (lihat bawah) dijalankan sebagai pengganti.
+8. Output Dataset
 
-## Hasil Matrix Penuh (400 run / 40 replikasi)
+04-data/<run-id>/
 
-Untuk memperbesar ukuran sampel statistik, matrix diperluas dari 5 menjadi 40
-replikasi per kombinasi (total 2 × 5 × 40 = 400 run). Loop baru
-`run-matrix.sh` (lihat [README](../05-kode/k6/README.md)) menjalankan
-replikasi 1..40 secara *interleaved* (loop replikasi di luar, loop
-mode/variant di dalam), sehingga jika proses berhenti di tengah jalan, setiap
-kombinasi tetap memiliki jumlah replikasi yang sama.
+├── k6-summary.json
 
-Sebelum menjalankan matrix, token JWT legitimate (`lib/legit-tokens.json`)
-yang sebelumnya sudah *expired* (dibuat 2026-06-12, `exp +24h`) diregenerasi
-ulang via skrip seed Tahap 2 dan `gen-legit-tokens.sh`, serta cache Redis
-di-*flush* agar matrix dimulai dari kondisi cache dingin (konsisten dengan
-metodologi awal).
+├── gateway-metrics-before.txt
 
-Matrix 400 run dijalankan 2026-06-15, seluruhnya selesai dengan
-`k6_exit_code: 0` (0 `FAILED` pada `04-data/matrix-40run.log`), menghasilkan
-struktur `04-data/<cache_mode>__<traffic_variant>__rep<N>__<timestamp>/` yang
-sama seperti di atas, dengan replikasi 1-40 untuk tiap 10 kombinasi
-`(cache_mode, traffic_variant)`.
+├── gateway-metrics-after.txt
 
-Data 400-run ini menjadi input Tahap 4 (analisis & visualisasi), menggantikan
-dataset 50-run sebelumnya.
+├── resources.csv
 
-## Catatan Lingkungan
+└── meta.json
 
-- **MSYS_NO_PATHCONV=1** diperlukan pada perintah `docker run` di Git Bash
-  (Windows) agar path container (`/scripts/...`, `/data/...`) tidak diubah
-  Git Bash/MSYS menjadi path Windows sebelum diteruskan ke `docker`.
-- Direktori `04-data/<run-id>/` kadang tidak bisa langsung dihapus
-  (`Device or resource busy`) tepat setelah `docker run --rm` dengan bind
-  mount selesai — ini transient lock Docker Desktop/WSL2 pada Windows, hilang
-  sendiri setelah beberapa saat.
+8.1 k6 Summary
+Berisi:
+
+request count,
+latency,
+throughput,
+error rate.
+
+8.2 Gateway Metrics
+Digunakan untuk menghitung:
+
+jumlah query database,
+cache hit,
+cache miss,
+rate limit block.
+
+8.3 Resource Monitoring
+
+| Kolom     | Isi               |
+| --------- | ----------------- |
+| timestamp | waktu pengukuran  |
+| container | nama container    |
+| cpu_pct   | penggunaan CPU    |
+| mem_usage | penggunaan memory |
+| mem_pct   | persentase memory |
+
+9. Optimasi Penyimpanan Data
+
+Percobaan awal menggunakan:
+--out json
+
+Hasil:
+139 MB
+571.414 baris
+
+10. Smoke Test
+
+./run-scenario.sh hybrid legitimate smoke \
+-e LEGIT_DURATION=15s \
+-e LEGIT_VUS=2
+
+Hasil:
+| Parameter     | Nilai   |
+| ------------- | ------- |
+| Request       | 43.531  |
+| Check success | 100%    |
+| Avg latency   | ±463 µs |
+| Output size   | <10 KB  |
+
+11. Matrix Awal (50 Run)
+
+Sebelum eksperimen final dilakukan:
+2 mode
+×
+5 traffic
+×
+5 replikasi
+
+=
+50 run
+
+12. Matrix Final (400 Run)
+
+Untuk meningkatkan validitas statistik:
+5 replikasi
+        |
+        v
+40 replikasi
+
+Total:
+2 × 5 × 40
+
+=
+
+400 eksperimen
+
+Eksekusi: 2026-06-15
+
+Status:
+| Parameter    | Hasil    |
+| ------------ | -------- |
+| Total run    | 400      |
+| Failed run   | 0        |
+| k6 exit code | 0        |
+| Dataset      | tersedia |
+
+13. Validasi Eksperimen
+
+JWT Token
+expired
+
+14. Catatan Lingkungan
+
+Pada Git Bash Windows diperlukan:
+MSYS_NO_PATHCONV=1
+
+15. Deliverable Tahap 3
+| Komponen           | Status |
+| ------------------ | ------ |
+| legitimate.js      | ✅      |
+| attack.js          | ✅      |
+| mixed.js           | ✅      |
+| Resource monitor   | ✅      |
+| Runner script      | ✅      |
+| Smoke test         | ✅      |
+| Matrix 50 run      | ✅      |
+| Matrix 400 run     | ✅      |
+| Dataset eksperimen | ✅      |
+

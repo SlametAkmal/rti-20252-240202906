@@ -1,0 +1,11 @@
+| Dataset | Index     | Operasi | Response(ms) | Throughput(req/s) |
+| ------- | --------- | ------- | -----------: | ----------------: |
+| 50000   | No Index  | SELECT  |         15.8 |               312 |
+| 50000   | Single    | SELECT  |          9.2 |               451 |
+| 50000   | Composite | SELECT  |          6.8 |               612 |
+| 100000  | No Index  | SELECT  |         28.4 |               265 |
+| 100000  | Single    | SELECT  |         14.6 |               398 |
+| 100000  | Composite | SELECT  |         10.7 |               521 |
+| 250000  | No Index  | SELECT  |         63.2 |               181 |
+| 250000  | Single    | SELECT  |         29.4 |               344 |
+| 250000  | Composite | SELECT  |         20.1 |               472 |

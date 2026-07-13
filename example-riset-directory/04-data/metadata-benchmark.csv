@@ -1,0 +1,7 @@
+| Run | Tanggal    | Dataset | Index     | Operasi | PostgreSQL |
+| --: | ---------- | ------- | --------- | ------- | ---------- |
+|   1 | 2026-06-01 | 50000   | No Index  | SELECT  | 16         |
+|   2 | 2026-06-01 | 50000   | Single    | SELECT  | 16         |
+|   3 | 2026-06-01 | 50000   | Composite | SELECT  | 16         |
+|   4 | 2026-06-02 | 100000  | No Index  | UPDATE  | 16         |
+|   5 | 2026-06-02 | 100000  | Single    | UPDATE  | 16         |
